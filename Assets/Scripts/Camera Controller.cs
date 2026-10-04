@@ -51,7 +51,7 @@ public class CameraController : MonoBehaviour
     {
         HandleMouseDragInput();
         HandleKeyboardInput();
-        HandleEdgeScrolling();
+        // HandleEdgeScrolling();
 
         transform.position = newPosition;
         Cursor.lockState = CursorLockMode.Confined; // If we have an extra monitor we don't want to exit screen bounds
