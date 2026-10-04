@@ -166,17 +166,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   cameraTransform: {fileID: 330585546}
   followTransform: {fileID: 0}
-  moveWithKeyboad: 1
-  moveWithEdgeScrolling: 1
-  moveWithMouseDrag: 1
-  fastSpeed: 0.05
-  normalSpeed: 0.01
-  movementSensitivity: 1
-  edgeSize: 50
-  cursorArrowUp: {fileID: 0}
-  cursorArrowDown: {fileID: 0}
-  cursorArrowLeft: {fileID: 0}
-  cursorArrowRight: {fileID: 0}
 --- !u!1 &89866559
 GameObject:
   m_ObjectHideFlags: 0
