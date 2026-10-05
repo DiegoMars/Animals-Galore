@@ -1,15 +1,25 @@
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class UnitSelectionManager : MonoBehaviour
 {
+    [Header("General")]
     public static UnitSelectionManager Instance {get; set;}
     public List<GameObject> allUnitsList = new List<GameObject>();
     public List<GameObject> unitsSelected = new List<GameObject>();
 
+    [Header("Building UI")]
+    public GameObject buildingMenu;
+
+    [Header("Layer Masks")]
     public LayerMask clickable;
     public LayerMask ground;
+    
+    [Header("Markers")]
     public GameObject groundMarker;
+
+    private Building selectedBuilding;
     private Camera cam;
 
     private void Awake()
@@ -31,20 +41,38 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0) &&
+            EventSystem.current != null &&
+            EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable) && hit.collider.CompareTag("Unit"))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                Building building = hit.collider.GetComponentInParent<Building>();
+                if (building != null)
                 {
-                    MultiSelect(hit.collider.gameObject);
+                    DeselectAll();
+                    selectedBuilding = building;
+                    buildingMenu.SetActive(true);
+                    Debug.Log($"Selected Building: {building.name}");
                 }
-                else
+                else if (hit.collider.CompareTag("Unit"))
                 {
-                    SelectByClicking(hit.collider.gameObject);
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        MultiSelect(hit.collider.gameObject);
+                    }
+                    else
+                    {
+                        SelectByClicking(hit.collider.gameObject);
+                    }
+                    buildingMenu.SetActive(false);
                 }
             }
             else
@@ -74,6 +102,7 @@ public class UnitSelectionManager : MonoBehaviour
             TriggerIndicator(unit, false);
         }
 
+        buildingMenu.SetActive(false);
         groundMarker.SetActive(false);
         unitsSelected.Clear();
     }
@@ -126,8 +155,18 @@ public class UnitSelectionManager : MonoBehaviour
         unit.GetComponent<UnitMovement>().enabled = shouldMove;
     }
 
-    private void TriggerIndicator(GameObject unit, bool isVisible)
+    private void TriggerIndicator(GameObject thing, bool isVisible)
     {
-        unit.transform.Find("SelectionIndicator").gameObject.SetActive(isVisible);
+        thing.transform.Find("SelectionIndicator").gameObject.SetActive(isVisible);
+    }
+
+    public void MakeUnitButton()
+    {
+        if (selectedBuilding == null)
+        {
+            Debug.LogWarning("No building is currently selected");
+            return;
+        }
+        selectedBuilding.StartUnitProduction();
     }
 }
