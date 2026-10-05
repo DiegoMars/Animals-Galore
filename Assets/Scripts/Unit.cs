@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour
     void Start()
     {
         UnitSelectionManager.Instance.allUnitsList.Add(gameObject);
+        TopBarManager.Instance.UpdatePopulation();
     }
 
     // Update is called once per frame
