@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitSelectionManager : MonoBehaviour
@@ -39,7 +36,7 @@ public class UnitSelectionManager : MonoBehaviour
             
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable) && hit.collider.CompareTag("Unit"))
             {
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
@@ -69,7 +66,7 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    private void DeselectAll()
+    public void DeselectAll()
     {
         foreach (var unit in unitsSelected)
         {
@@ -85,15 +82,11 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (unitsSelected.Contains(unit) == false)
         {
-            unitsSelected.Add(unit);
-            EnableMovement(unit, true);
-            TriggerIndicator(unit, true);
+            SelectUnit(unit, true);
         }
         else
         {
-            EnableMovement(unit, false);
-            unitsSelected.Remove(unit);
-            TriggerIndicator(unit, false);
+            SelectUnit(unit, false);
         }
     }
 
@@ -101,9 +94,31 @@ public class UnitSelectionManager : MonoBehaviour
     {
         DeselectAll();
 
-        unitsSelected.Add(unit);
-        TriggerIndicator(unit, true);
-        EnableMovement(unit, true);
+        SelectUnit(unit, true);
+    }
+
+    internal void DragSelect(GameObject unit)
+    {
+        if (unitsSelected.Contains(unit) == false)
+        {
+            SelectUnit(unit, true);
+        }
+    }
+
+    private void SelectUnit(GameObject unit, bool value)
+    {
+        if (value)
+        {
+            unitsSelected.Add(unit);
+            EnableMovement(unit, true);
+            TriggerIndicator(unit, true);
+        }
+        else
+        {
+            unitsSelected.Remove(unit);
+            EnableMovement(unit, false);
+            TriggerIndicator(unit, false);
+        }
     }
 
     private void EnableMovement(GameObject unit, bool shouldMove)
