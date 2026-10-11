@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class UnitMovement : MonoBehaviour
 {
     Camera cam;
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     public LayerMask ground;
 
     private void Start()

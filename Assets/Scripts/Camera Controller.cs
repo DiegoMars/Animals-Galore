@@ -15,6 +15,13 @@ public class CameraController : MonoBehaviour
     Vector3 dragStartPosition;
     Vector3 dragCurrentPosition;
 
+    [Header("Zoom")]
+    [SerializeField] float zoomSpeed = 30f;
+    [SerializeField] float minFieldOfView = 30f;
+    [SerializeField] float maxFieldOfView = 100f;
+
+    private Camera actualCamera;
+
     float fastSpeed = 0.05f;
     float normalSpeed = 0.02f;
     float movementSpeed;
@@ -26,6 +33,7 @@ public class CameraController : MonoBehaviour
     {
         newPosition = transform.position;
         movementSpeed = normalSpeed;
+        actualCamera = cameraTransform.GetComponent<Camera>();
     }
 
     private void Update()
@@ -51,10 +59,11 @@ public class CameraController : MonoBehaviour
     {
         HandleMouseDragInput();
         HandleKeyboardInput();
+        HandleZoomInput();
         // HandleEdgeScrolling();
 
         transform.position = newPosition;
-        Cursor.lockState = CursorLockMode.Confined; // If we have an extra monitor we don't want to exit screen bounds
+        Cursor.lockState = CursorLockMode.Confined; // To not exit screen bounds
     }
 
     private void HandleKeyboardInput()
@@ -149,5 +158,23 @@ public class CameraController : MonoBehaviour
                 newPosition = transform.position + dragStartPosition - dragCurrentPosition;
             }
         }
+    }
+
+    private void HandleZoomInput()
+    {
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+        if (Mathf.Abs(scrollInput) < 0.01f)
+        {
+            return;
+        }
+
+        actualCamera.fieldOfView -= scrollInput * zoomSpeed;
+
+        actualCamera.fieldOfView = Mathf.Clamp(
+            actualCamera.fieldOfView,
+            minFieldOfView,
+            maxFieldOfView
+        );
     }
 }

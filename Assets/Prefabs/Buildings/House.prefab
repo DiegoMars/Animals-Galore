@@ -519,6 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Building
   unitPrefab: {fileID: 0}
   spawnPoint: {fileID: 4093594350213691633}
+  showMenu: 0
 --- !u!1 &4656836939835410957
 GameObject:
   m_ObjectHideFlags: 0

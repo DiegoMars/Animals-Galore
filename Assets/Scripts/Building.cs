@@ -1,12 +1,23 @@
-using System;
-using Unity.VisualScripting;
+using TMPro;
+using UnityEngine.AI;
 using UnityEngine;
+using System;
 
 public class Building : MonoBehaviour
 {
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private Transform destinationPoint;
+    public bool showMenu;
     public Transform SpawnPoint => spawnPoint;
+    public Transform DestinationPoint => destinationPoint;
+
+    public void SetBuildingUI(GameObject menu) {
+        if (showMenu) {
+            menu.SetActive(true);
+            menu.GetComponentInChildren<TextMeshProUGUI>().text = unitPrefab.name;
+        }
+    }
 
     internal void StartUnitProduction()
     {
@@ -27,19 +38,12 @@ public class Building : MonoBehaviour
             spawnPoint.position,
             spawnPoint.rotation
         );
-
+        newUnit.GetComponent<NavMeshAgent>().SetDestination(destinationPoint.position);
         Debug.Log($"Created {newUnit.name} at {gameObject.name}");
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    internal void MoveDestination(Vector3 point)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        destinationPoint.position = point;
     }
 }
