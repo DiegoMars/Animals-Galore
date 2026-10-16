@@ -1,20 +1,26 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
-    public List<GameObject> AllResources = new List<GameObject>();
-    public List<GameObject> CollectedResources = new List<GameObject>();
+    [SerializeField] private bool discovered;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        discovered = false;
+        ResourceManager.Instance.AllResources.Add(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnDestroy()
     {
-        
+        ResourceManager.Instance.AllResources.Remove(gameObject);
+    }
+
+    internal void SetDiscovered(bool v)
+    {
+        discovered = v;
+        this.transform.Find("DiscoveryMarker").gameObject.SetActive(discovered);
     }
 }
