@@ -900,6 +900,9 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 64
+  clickable:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &5843962695502592815
 GameObject:
   m_ObjectHideFlags: 0

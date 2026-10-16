@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 791c63996bcd8824294a212c751f9b34
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - buildingMenu: {instanceID: 0}
+  - unitMarker: {fileID: 6138533281483350472, guid: c34f58ce82553a44280c6b569172ac18, type: 3}
+  - buildingMarker: {fileID: 6138533281483350472, guid: a3f1eb19ed4ab1c428401fa448aee4d6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

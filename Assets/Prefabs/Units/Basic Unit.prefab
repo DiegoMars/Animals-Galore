@@ -165,9 +165,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749329ddbc7bf814bb21f11dd98eeca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitMovement
+  agent: {fileID: 0}
   ground:
     serializedVersion: 2
     m_Bits: 64
+  clickable:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &3842136765394792693
 GameObject:
   m_ObjectHideFlags: 0
