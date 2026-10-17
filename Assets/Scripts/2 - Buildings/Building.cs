@@ -8,9 +8,22 @@ public class Building : MonoBehaviour
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform destinationPoint;
+    [SerializeField] internal ResourceManager.ResourceTypes CollectionType;
+    [SerializeField] public Animator collectionAnimator;
+
     public bool showMenu;
     public Transform SpawnPoint => spawnPoint;
     public Transform DestinationPoint => destinationPoint;
+
+    void Start()
+    {
+        BuildManager.Instance.allBuildingsList.Add(gameObject);
+    }
+
+    public void OnDestroy()
+    {
+        BuildManager.Instance.allBuildingsList.Remove(gameObject);
+    }
 
     public void SetBuildingUI(GameObject menu) {
         if (showMenu) {
@@ -45,5 +58,17 @@ public class Building : MonoBehaviour
     internal void MoveDestination(Vector3 point)
     {
         destinationPoint.position = point;
+    }
+
+    internal void CollectResource(ResourceManager.ResourceTypes resource)
+    {
+        Debug.Log($"[Building] Collected {resource}");
+        ResourceManager.Instance.AddResource(resource, 10);
+        TriggerCollection();
+    }
+
+    internal void TriggerCollection()
+    {
+        collectionAnimator.SetTrigger("Collecting");
     }
 }

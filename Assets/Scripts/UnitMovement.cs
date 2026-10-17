@@ -1,4 +1,4 @@
-using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,10 +9,15 @@ public class UnitMovement : MonoBehaviour
     public LayerMask ground;
     public LayerMask clickable;
 
+    private Unit ParentUnit;
+    private bool harvestor;
+
     private void Start()
     {
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
+        ParentUnit = this.GetComponentInParent<Unit>();
+        harvestor = ParentUnit.Harvestor;
     }
 
     private void Update()
@@ -21,11 +26,13 @@ public class UnitMovement : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
+            if (harvestor && Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
             {
                 if (hit.collider.CompareTag("Resource"))
                 {
-                    AttemptCollection();
+                    ResourceProducer resource = hit.collider.GetComponentInParent<ResourceProducer>();
+                    if (ResourceManager.Instance.IsResourceDiscovered(resource))
+                        ParentUnit.StartCollection(resource);
                 }
             }
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
@@ -33,10 +40,5 @@ public class UnitMovement : MonoBehaviour
                 agent.SetDestination(hit.point);
             }
         }
-    }
-
-    private void AttemptCollection()
-    {
-        throw new NotImplementedException();
     }
 }

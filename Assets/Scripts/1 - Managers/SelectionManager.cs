@@ -40,7 +40,6 @@ public class UnitSelectionManager : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
-        Debug.Log($"Selected Building value: {selectedBuilding}");
     }
 
     private void Update()

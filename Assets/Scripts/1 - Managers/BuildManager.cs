@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -5,10 +6,12 @@ using UnityEngine.AI;
 public class BuildManager : MonoBehaviour
 {
     [Header("General")]
+    public static BuildManager Instance {get; set;}
     public GameObject PrefabObject;
     public bool isPlacing;
     private LayerMask Ground;
     private LayerMask Clickable;
+    public List<GameObject> allBuildingsList = new List<GameObject>();
 
     [Header("Prefabs")]
     public GameObject FarmPrefab; // 0
@@ -27,6 +30,18 @@ public class BuildManager : MonoBehaviour
         {KeyCode.A, 1}, // Barracks
         {KeyCode.W, 2}, // House
     };
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -111,24 +126,24 @@ public class BuildManager : MonoBehaviour
         switch (index)
         {
             case 0: 
-                Debug.Log($"You selected {index}, the Farm");
-                selectBuilding(FarmPrefab);
+                Debug.Log($"[Build Manager] You selected {index}, the Farm");
+                selectBuildingPrefab(FarmPrefab);
                 break;
             case 1: 
-                Debug.Log($"You selected {index}, the Barracks");
-                selectBuilding(BarracksPrefab);
+                Debug.Log($"[Build Manager] You selected {index}, the Barracks");
+                selectBuildingPrefab(BarracksPrefab);
                 break;
             case 2: 
-                Debug.Log($"You selected {index}, the House");
-                selectBuilding(HousePrefab);
+                Debug.Log($"[Build Manager] You selected {index}, the House");
+                selectBuildingPrefab(HousePrefab);
                 break;
             default: 
-                Debug.Log($"Error");
+                Debug.Log($"[Build Manager] Error with building selection");
                 break;
         }
     }
 
-    private void selectBuilding(GameObject buildingPrefab)
+    private void selectBuildingPrefab(GameObject buildingPrefab)
     {
         PrefabObject = buildingPrefab;
 
@@ -162,5 +177,27 @@ public class BuildManager : MonoBehaviour
         FollowObject.layer = LayerMask.NameToLayer("TransparentFX");
 
         isPlacing = true;
+    }
+
+    // Will enventually be expanded to find only a specific type of building
+    internal Building FindNearestCollector(Vector3 pos, ResourceManager.ResourceTypes resourceType) {
+        float closestDistance = Mathf.Infinity;
+        Building closestCollector = allBuildingsList[0].GetComponent<Building>();
+        foreach (GameObject building in allBuildingsList)
+        {
+            Building build = building.GetComponent<Building>();
+            ResourceManager.ResourceTypes buildingType = build.CollectionType;
+            if (buildingType != resourceType && buildingType != ResourceManager.ResourceTypes.ALL)
+            {
+                continue;
+            }
+            Vector3 direction = building.transform.position - pos;
+            float distanceSq = direction.sqrMagnitude;
+            if (distanceSq < closestDistance)
+            {
+                closestCollector = build;
+            }
+        }
+        return closestCollector;
     }
 }

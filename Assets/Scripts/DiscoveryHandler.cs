@@ -4,8 +4,8 @@ public class DiscoveryHandler : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Discovery mesh hit: {other.name}");
-        Resource resource = other.GetComponentInParent<Resource>();
+        Debug.Log($"[Discovery Handler] Discovery mesh hit: {other.name}");
+        ResourceProducer resource = other.GetComponentInParent<ResourceProducer>();
 
         if (resource == null)
         {

@@ -1423,6 +1423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildManager
   PrefabObject: {fileID: 0}
   isPlacing: 0
+  allBuildingsList: []
   FarmPrefab: {fileID: 4799181119091818017, guid: 670342ee3cf624741b11c6ee5e30f932, type: 3}
   BarracksPrefab: {fileID: 4799181119091818017, guid: 9edf5dd54e08a0c4c9acb157cc735c10, type: 3}
   HousePrefab: {fileID: 3523307811536940104, guid: 9b57900ce35724945a666e790632d216, type: 3}
@@ -2741,6 +2742,11 @@ MonoBehaviour:
   AllResources: []
   DiscoveredResources: []
   CollectedResources: []
+  TopBar: {fileID: 1781651735}
+  WoodQuantity: 0
+  FoodQuantity: 0
+  StoneQuantity: 0
+  TechPointsQuantity: 0
 --- !u!1 &1405618698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,13 +3326,17 @@ PrefabInstance:
       propertyPath: m_StoppingDistance
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4222390022456406985, guid: b94e5b4201265ec4e81330f75c68c14e, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4386968126068446162, guid: b94e5b4201265ec4e81330f75c68c14e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.91
       objectReference: {fileID: 0}
     - target: {fileID: 4386968126068446162, guid: b94e5b4201265ec4e81330f75c68c14e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0000054399916
+      value: 1.52
       objectReference: {fileID: 0}
     - target: {fileID: 4386968126068446162, guid: b94e5b4201265ec4e81330f75c68c14e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4999,7 +5009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386968126068446162, guid: 07942bdcc9ef9e043aee0d4a3461f71d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00002
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4386968126068446162, guid: 07942bdcc9ef9e043aee0d4a3461f71d, type: 3}
       propertyPath: m_LocalPosition.z
