@@ -26,16 +26,13 @@ public class UnitMovement : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (harvestor && Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
+            if (harvestor && Physics.Raycast(ray, out hit, Mathf.Infinity, clickable) && hit.collider.CompareTag("Resource"))
             {
-                if (hit.collider.CompareTag("Resource"))
-                {
-                    ResourceProducer resource = hit.collider.GetComponentInParent<ResourceProducer>();
-                    if (ResourceManager.Instance.IsResourceDiscovered(resource))
-                        ParentUnit.StartCollection(resource);
-                }
+                ResourceProducer resource = hit.collider.GetComponentInParent<ResourceProducer>();
+                if (ResourceManager.Instance.IsResourceDiscovered(resource))
+                    ParentUnit.StartCollection(resource);
             }
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
+            else if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
             {
                 agent.SetDestination(hit.point);
             }

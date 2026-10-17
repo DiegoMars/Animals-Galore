@@ -39,13 +39,13 @@ public class Unit : MonoBehaviour
     
         // Need implement to deposit the resource currently being carried
         // before harvesting another
-        if (CarryingResource != ResourceManager.ResourceTypes.NONE)
+        if (CarryingResource == ResourceManager.ResourceTypes.NONE)
         {
-            DepositResource();
+            HarvestResource();
         }
         else
         {
-            HarvestResource();
+            DepositResource();
         }
     }
 

@@ -21,15 +21,23 @@ public class ResourceCollectionMeshHandler : MonoBehaviour
         
         if (harvestor.Harvestor && harvestor.Harvesting)
         {
-            Debug.Log($"[ResourceCollectionMesh] Attempting to harvest");
-            if (ParentResourceProducer.ConsumeResource())
+            if (harvestor.CarryingResource == ResourceManager.ResourceTypes.NONE)
             {
-                harvestor.CarryingResource = ParentResourceProducer.ResourceType;
-                harvestor.DepositResource();
+                Debug.Log($"[ResourceCollectionMesh] Attempting to harvest");
+                if (ParentResourceProducer.ConsumeResource())
+                {
+                    harvestor.CarryingResource = ParentResourceProducer.ResourceType;
+                    harvestor.DepositResource();
+                }
+                else
+                {
+                    harvestor.Harvesting = false;
+                }
             }
             else
             {
-                harvestor.Harvesting = false;
+                Debug.Log($"[ResourceCollectionMesh] Already carrying resource");
+                harvestor.DepositResource();
             }
         }
     }
