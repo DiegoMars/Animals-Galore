@@ -2,10 +2,13 @@ using TMPro;
 using UnityEngine.AI;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
     [SerializeField] private GameObject unitPrefab;
+    [SerializeField] private ResourceManager.ResourceTypes UnitCostType;
+    [SerializeField] private int UnitCostValue;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform destinationPoint;
     [SerializeField] internal ResourceManager.ResourceTypes CollectionType;
@@ -25,10 +28,11 @@ public class Building : MonoBehaviour
         BuildManager.Instance.allBuildingsList.Remove(gameObject);
     }
 
-    public void SetBuildingUI(GameObject menu) {
+    public void SetBuildingUI() {
         if (showMenu) {
-            menu.SetActive(true);
-            menu.GetComponentInChildren<TextMeshProUGUI>().text = unitPrefab.name;
+            ButtonManager.Instance.SetUi(unitPrefab.name,
+                                         UnitCostType,
+                                         UnitCostValue);
         }
     }
 
@@ -46,6 +50,7 @@ public class Building : MonoBehaviour
             return;
         }
 
+        ResourceManager.Instance.SubtractResource(UnitCostType, UnitCostValue);
         GameObject newUnit = Instantiate(
             unitPrefab,
             spawnPoint.position,

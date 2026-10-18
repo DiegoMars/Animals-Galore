@@ -11,7 +11,12 @@ public class BuildingCollectionMeshHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"[BuildingCollectionMesh] Mesh hit: {other.name}");
+        if (other.transform.parent)
+            Debug.Log($"[BuildingCollectionMesh] {transform.parent.name}'s " +
+                    $"Discovery mesh hit: {other.transform.parent.name}");
+        else
+            Debug.Log($"[BuildingCollectionMesh] {transform.parent.name}'s " +
+                    $"Discovery mesh hit: {other.name}");
         Unit harvestor = other.GetComponentInParent<Unit>();
         if (harvestor == null)
         {

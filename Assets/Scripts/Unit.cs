@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
-        UnitSelectionManager.Instance.allUnitsList.Add(gameObject);
+        SelectionManager.Instance.allUnitsList.Add(gameObject);
         TopBarManager.Instance.UpdatePopulation();
         UnitMover = this.GetComponentInParent<UnitMovement>();
     }
@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
     // Update is called once per frame
     public void OnDestroy()
     {
-        UnitSelectionManager.Instance.allUnitsList.Remove(gameObject);
+        SelectionManager.Instance.allUnitsList.Remove(gameObject);
     }
 
     internal void StartCollection(ResourceProducer resource)

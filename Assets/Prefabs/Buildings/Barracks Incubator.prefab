@@ -108,7 +108,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2
@@ -222,7 +222,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -365,7 +365,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2
@@ -495,6 +495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5089651617469738142}
   - component: {fileID: 3693312958597771772}
+  - component: {fileID: 8801706535356082781}
   m_Layer: 7
   m_Name: Barracks Incubator
   m_TagString: Building
@@ -534,9 +535,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Building
   unitPrefab: {fileID: 5702662342868954144, guid: b94e5b4201265ec4e81330f75c68c14e, type: 3}
+  UnitCostType: 3
+  UnitCostValue: 10
   spawnPoint: {fileID: 1690228838786767559}
   destinationPoint: {fileID: 4582274971540630288}
+  CollectionType: 0
+  collectionAnimator: {fileID: 0}
   showMenu: 1
+--- !u!65 &8801706535356082781
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4799181119091818017}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.5, z: 2}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &7964017489919378995
 GameObject:
   m_ObjectHideFlags: 0

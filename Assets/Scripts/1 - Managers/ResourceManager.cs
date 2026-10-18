@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
@@ -76,6 +77,24 @@ public class ResourceManager : MonoBehaviour
         return false;
     }
 
+    internal int ResourceQuantity(ResourceTypes resource)
+    {
+        switch (resource)
+        {
+            case ResourceTypes.WOOD: 
+                return WoodQuantity;
+            case ResourceTypes.FOOD: 
+                return FoodQuantity;
+            case ResourceTypes.STONE: 
+                return StoneQuantity;
+            case ResourceTypes.TECH: 
+                return TechPointsQuantity;
+            default:
+                Debug.Log($"[Resource Manager] {resource} is not valid");
+                return -1;
+        }
+    }
+
     internal void AddResource(ResourceTypes resource, int quantity)
     {
         switch (resource)
@@ -94,6 +113,32 @@ public class ResourceManager : MonoBehaviour
                 break;
             case ResourceTypes.TECH: 
                 TechPointsQuantity += quantity;
+                TopBar.SetTech(TechPointsQuantity.ToString());
+                break;
+            default:
+                Debug.Log($"[Resource Manager] {resource} is not valid");
+                break;
+        }
+    }
+
+    internal void SubtractResource(ResourceTypes resource, int quantity)
+    {
+        switch (resource)
+        {
+            case ResourceTypes.WOOD: 
+                WoodQuantity -= quantity;
+                TopBar.SetWood(WoodQuantity.ToString());
+                break;
+            case ResourceTypes.FOOD: 
+                FoodQuantity -= quantity;
+                TopBar.SetFood(FoodQuantity.ToString());
+                break;
+            case ResourceTypes.STONE: 
+                StoneQuantity -= quantity;
+                TopBar.SetStone(StoneQuantity.ToString());
+                break;
+            case ResourceTypes.TECH: 
+                TechPointsQuantity -= quantity;
                 TopBar.SetTech(TechPointsQuantity.ToString());
                 break;
             default:

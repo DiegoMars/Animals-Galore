@@ -3,16 +3,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.AI;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
-public class UnitSelectionManager : MonoBehaviour
+public class SelectionManager : MonoBehaviour
 {
     [Header("General")]
-    public static UnitSelectionManager Instance {get; set;}
+    public static SelectionManager Instance {get; set;}
     public List<GameObject> allUnitsList = new List<GameObject>();
     public List<GameObject> unitsSelected = new List<GameObject>();
-
-    [Header("Building UI")]
-    public GameObject buildingMenu;
 
     [Header("Layer Masks")]
     public LayerMask clickable;
@@ -110,7 +108,7 @@ public class UnitSelectionManager : MonoBehaviour
             SelectBuilding(selectedBuilding, false);
         }
 
-        buildingMenu.SetActive(false);
+        ButtonManager.Instance.BuildingMenu.SetActive(false);
         unitMarker.SetActive(false);
         buildingMarker.SetActive(false);
         unitsSelected.Clear();
@@ -202,7 +200,7 @@ public class UnitSelectionManager : MonoBehaviour
             // buildingsSelected.Add(building);
             TriggerIndicator(building, true);
             selectedBuilding = building;
-            selectedBuilding.SetBuildingUI(buildingMenu);
+            selectedBuilding.SetBuildingUI();
 
             Vector3 buildingPos = building.transform.position;
             Vector3 destinationPos = building.transform.Find("Destination").gameObject.transform.position;
@@ -214,7 +212,7 @@ public class UnitSelectionManager : MonoBehaviour
         {
             // buildingsSelected.Remove(building);
             TriggerIndicator(building, false);
-            buildingMenu.SetActive(false);
+            ButtonManager.Instance.BuildingMenu.SetActive(false);
             selectedBuilding = null;
         }
     }

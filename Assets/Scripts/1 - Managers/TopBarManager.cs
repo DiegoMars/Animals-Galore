@@ -62,7 +62,7 @@ public class TopBarManager : MonoBehaviour
     }
     public void UpdatePopulation()
     {
-        int population = UnitSelectionManager.Instance.allUnitsList.Count;
+        int population = SelectionManager.Instance.allUnitsList.Count;
         Population.SetText(population.ToString());
     }
     public void UpInAge()
