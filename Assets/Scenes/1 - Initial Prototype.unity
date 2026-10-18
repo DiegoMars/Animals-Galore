@@ -388,10 +388,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 500027817}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 8.536304}
+  m_SizeDelta: {x: 90, y: 44.927002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &250499008
 MonoBehaviour:
@@ -443,9 +443,9 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 14
+  m_fontSizeMax: 24
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -715,8 +715,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.8, y: -20.4}
-  m_SizeDelta: {x: 52.496, y: 12.4452}
+  m_AnchoredPosition: {x: -0.37760162, y: -20.4}
+  m_SizeDelta: {x: 93.3408, y: 12.4452}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &304480756
 MonoBehaviour:
@@ -765,12 +765,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
+  m_fontSize: 11.1
   m_fontSizeBase: 14
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 5
+  m_fontSizeMax: 18
   m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -1893,7 +1893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &748441819
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2531,10 +2531,12 @@ MonoBehaviour:
   ActualButton: {fileID: 0}
   UnitName: {fileID: 0}
   UnitCost: {fileID: 0}
-  Active:
+  UnitCostType: 0
+  UnitCostValue: 0
+  ColorActive:
     serializedVersion: 2
     rgba: 4294309365
-  Inactive:
+  ColorInactive:
     serializedVersion: 2
     rgba: 2160642248
 --- !u!1 &1147217778
