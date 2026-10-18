@@ -2531,7 +2531,7 @@ MonoBehaviour:
   ActualButton: {fileID: 0}
   UnitName: {fileID: 0}
   UnitCost: {fileID: 0}
-  UnitCostType: 0
+  UnitCostType: 3
   UnitCostValue: 0
   ColorActive:
     serializedVersion: 2
