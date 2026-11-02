@@ -150,3 +150,5 @@ Packages/packages-lock.json linguist-generated
 LightingData.asset     binary
 Assets/_Imports/FlipGameDev/Terrain&GrassPack/Demo/Demo/LightingData.asset filter=lfs diff=lfs merge=lfs -text
 Assets/_Imports/FlipGameDev/Terrain&GrassPack/Terrain_Settings/Data/Demo.asset filter=lfs diff=lfs merge=lfs -text
+Assets/_Scenes/1[[:space:]]-[[:space:]]Initial[[:space:]]Prototype/NavMesh-Terrain.asset filter=lfs diff=lfs merge=lfs -text
+Assets/1[[:space:]]-[[:space:]]References/Terrains/Prototype[[:space:]]Terrain.asset filter=lfs diff=lfs merge=lfs -text
