@@ -803,7 +803,7 @@ GameObject:
   - component: {fileID: 3080305075522517641}
   - component: {fileID: 7364144228403623205}
   m_Layer: 7
-  m_Name: Grasshopper
+  m_Name: NOTUSED - Grasshopper
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
