@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7d265110ebab5e4aa46d7d0719cbcef, type: 3}
-  m_Name: Grasshopper
+  m_Name: Grasshopper v1
   m_EditorClassIdentifier: Assembly-CSharp::UnitOS
+  prefab: {fileID: 309374741323540260, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
   UnitName: Grasshopper
+  Faction: 0
+  Harvestor: 0
   MaxHealth: 5
   MovementType: 0
   Damage: 3
   DamageType: 0
   MovementSpeed: 5
-  Faction: 0
-  Harvestor: 0
-  prefab: {fileID: 6478403359564242842, guid: a5547c2f96564754180bb0cb1fc3854a, type: 3}
+  cost: 10
+  costType: 3

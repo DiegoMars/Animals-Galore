@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7982702689380146341}
   - component: {fileID: 8441098308484684831}
   - component: {fileID: 7173031441064618231}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Front Legs (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 1696681783934647451}
   - component: {fileID: 6226138195269951305}
   - component: {fileID: 3626778978717495985}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Bottom Long Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6303708030124627818}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 8660989439555975678}
   - component: {fileID: 2558531973007295495}
   - component: {fileID: 9038259050487539106}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Top Long Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 2680647213662436063}
   - component: {fileID: 574276769606963434}
   - component: {fileID: 6788963603830349046}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Front Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 1581535703967422848}
   - component: {fileID: 7637453242853677128}
   - component: {fileID: 7526309956864035024}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,7 +920,7 @@ GameObject:
   - component: {fileID: 8707685136708906185}
   - component: {fileID: 6720113248149278171}
   - component: {fileID: 4111258144348561779}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1032,7 +1032,7 @@ GameObject:
   - component: {fileID: 3568720390016538272}
   - component: {fileID: 5824582960034094340}
   - component: {fileID: 2089747837032159107}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Top Long Leg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 4674705618052026}
   - component: {fileID: 5995620234877732185}
   - component: {fileID: 6971763733864941436}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Bottom Long Leg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083df8bf28dd0324da06bbb5daa92508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Building
-  unitPrefab: {fileID: 5702662342868954144, guid: b94e5b4201265ec4e81330f75c68c14e, type: 3}
+  unitPrefab: {fileID: 309374741323540260, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
   UnitCostType: 3
   UnitCostValue: 10
   spawnPoint: {fileID: 1690228838786767559}

@@ -4,21 +4,33 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [Header("General")]
+    public UnitOS unitInfo;
     public bool Harvestor = false;
-    public ResourceManager.ResourceTypes CarryingResource = ResourceManager.ResourceTypes.NONE;
+    public int CurrentHealth;
 
-    [Header("For Reference")]
+    [Header("Harvestor")]
     public bool Harvesting = false;
+    public ResourceManager.ResourceTypes CarryingResource = ResourceManager.ResourceTypes.NONE;
     public ResourceProducer ResourceTarget;
     public Building Collector;
+
+    // [Header("Troop")]
 
     private UnitMovement UnitMover;
 
     void Start()
     {
+        // Manager Stuff
         SelectionManager.Instance.allUnitsList.Add(gameObject);
         TopBarManager.Instance.UpdatePopulation();
         UnitMover = this.GetComponentInParent<UnitMovement>();
+    }
+
+    public void Awake()
+    {
+        // Setting stuff
+        Harvestor = unitInfo.Harvestor;
+        CurrentHealth = unitInfo.MaxHealth;
     }
 
     // Update is called once per frame

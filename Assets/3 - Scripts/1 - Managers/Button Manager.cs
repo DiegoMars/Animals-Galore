@@ -35,18 +35,14 @@ public class ButtonManager : MonoBehaviour
         {
             if (text.gameObject.name == "UnitName")
             {
-                Debug.Log("[Button Manager] Found UnitName text mesh");
                 UnitName = text;
             }
             if (text.gameObject.name == "UnitCost")
             {
-                Debug.Log("[Button Manager] Found UnitCost text mesh");
                 UnitCost = text;
             }
         }
-        if (UnitName && UnitCost)
-            Debug.Log("[Button Manager] Found both text meshes");
-        else
+        if (!(UnitName && UnitCost))
             Debug.Log("[Button Manager] 1 or more text meshes not found");
     }
 

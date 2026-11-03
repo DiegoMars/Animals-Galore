@@ -15,13 +15,15 @@ public class UnitOS : ScriptableObject
         Range
     };
 
+    public GameObject prefab;
     public string UnitName;
+    public FactionManager.Factions Faction;
+    public bool Harvestor;
     public int MaxHealth;
     public MovementTypesEnum MovementType;
     public int Damage;
     public DamageTypeEnum DamageType;
     public int MovementSpeed;
-    public FactionManager.Factions Faction;
-    public bool Harvestor;
-    public GameObject prefab;
+    public int cost;
+    public ResourceManager.ResourceTypes costType;
 }
