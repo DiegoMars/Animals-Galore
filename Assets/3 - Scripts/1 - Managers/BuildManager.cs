@@ -175,6 +175,7 @@ public class BuildManager : MonoBehaviour
             collider.enabled = false;
         }
         FollowObject.layer = LayerMask.NameToLayer("TransparentFX");
+        FollowObject.tag = "Untagged";
 
         isPlacing = true;
     }

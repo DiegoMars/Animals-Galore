@@ -537,9 +537,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083df8bf28dd0324da06bbb5daa92508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Building
-  unitPrefab: {fileID: 5702662342868954144, guid: 07942bdcc9ef9e043aee0d4a3461f71d, type: 3}
-  UnitCostType: 3
-  UnitCostValue: 5
+  UnitOSList:
+  - {fileID: 11400000, guid: 939094582cc65bc45a69f9b318e9ac38, type: 2}
   spawnPoint: {fileID: 4470803137161692410}
   destinationPoint: {fileID: 4322869563389341605}
   CollectionType: 3

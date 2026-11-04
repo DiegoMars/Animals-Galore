@@ -108,7 +108,7 @@ public class SelectionManager : MonoBehaviour
             SelectBuilding(selectedBuilding, false);
         }
 
-        ButtonManager.Instance.BuildingMenu.SetActive(false);
+        ButtonManager.Instance.UnitSelectionMenu.SetActive(false);
         unitMarker.SetActive(false);
         buildingMarker.SetActive(false);
         unitsSelected.Clear();
@@ -212,7 +212,7 @@ public class SelectionManager : MonoBehaviour
         {
             // buildingsSelected.Remove(building);
             TriggerIndicator(building, false);
-            ButtonManager.Instance.BuildingMenu.SetActive(false);
+            ButtonManager.Instance.UnitSelectionMenu.SetActive(false);
             selectedBuilding = null;
         }
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d265110ebab5e4aa46d7d0719cbcef, type: 3}
   m_Name: Ant Farmer v1
   m_EditorClassIdentifier: Assembly-CSharp::UnitOS
-  prefab: {fileID: 0}
+  prefab: {fileID: 309374741323540260, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
   UnitName: Ant Farmer
   Faction: 0
   Harvestor: 1

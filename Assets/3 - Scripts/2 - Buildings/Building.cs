@@ -3,12 +3,11 @@ using UnityEngine.AI;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.Runtime.ExceptionServices;
 
 public class Building : MonoBehaviour
 {
-    [SerializeField] private GameObject unitPrefab;
-    [SerializeField] private ResourceManager.ResourceTypes UnitCostType;
-    [SerializeField] private int UnitCostValue;
+    [SerializeField] public UnitOS[] UnitOSList;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform destinationPoint;
     [SerializeField] internal ResourceManager.ResourceTypes CollectionType;
@@ -20,6 +19,7 @@ public class Building : MonoBehaviour
 
     void Start()
     {
+        // Manager
         BuildManager.Instance.allBuildingsList.Add(gameObject);
     }
 
@@ -29,35 +29,43 @@ public class Building : MonoBehaviour
     }
 
     public void SetBuildingUI() {
-        if (showMenu) {
-            ButtonManager.Instance.SetUi(unitPrefab.name,
-                                         UnitCostType,
-                                         UnitCostValue);
+        if (!showMenu)
+        {
+            Debug.Log("[Building] Show menu set false");
+            return;
         }
+        if (UnitOSList.Length == 0)
+        {
+            Debug.Log("[Building] Empty UnitOSList");
+            return;
+        }
+        ButtonManager.Instance.SetUi(UnitOSList);
     }
 
+    // Need to redo
     internal void StartUnitProduction()
     {
-        if (unitPrefab == null)
-        {
-            Debug.LogWarning($"No unit prefab assigned to {gameObject.name}");
-            return;
-        }
+        throw new NotImplementedException();
+        // if (unitPrefab == null)
+        // {
+        //     Debug.LogWarning($"No unit prefab assigned to {gameObject.name}");
+        //     return;
+        // }
 
-        if (spawnPoint == null)
-        {
-            Debug.LogWarning($"No spawn point assigned to {gameObject.name}");
-            return;
-        }
+        // if (spawnPoint == null)
+        // {
+        //     Debug.LogWarning($"No spawn point assigned to {gameObject.name}");
+        //     return;
+        // }
 
-        ResourceManager.Instance.SubtractResource(UnitCostType, UnitCostValue);
-        GameObject newUnit = Instantiate(
-            unitPrefab,
-            spawnPoint.position,
-            spawnPoint.rotation
-        );
-        newUnit.GetComponent<NavMeshAgent>().SetDestination(destinationPoint.position);
-        Debug.Log($"Created {newUnit.name} at {gameObject.name}");
+        // ResourceManager.Instance.SubtractResource(UnitCostType, UnitCostValue);
+        // GameObject newUnit = Instantiate(
+        //     unitPrefab,
+        //     spawnPoint.position,
+        //     spawnPoint.rotation
+        // );
+        // newUnit.GetComponent<NavMeshAgent>().SetDestination(destinationPoint.position);
+        // Debug.Log($"Created {newUnit.name} at {gameObject.name}");
     }
 
     internal void MoveDestination(Vector3 point)

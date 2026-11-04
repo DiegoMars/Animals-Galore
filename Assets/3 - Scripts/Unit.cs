@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
     [Header("General")]
     public UnitOS unitInfo;
-    public bool Harvestor = false;
+    public FactionManager.Factions Faction;
     public int CurrentHealth;
+    public bool Harvestor = false;
 
     [Header("Harvestor")]
     public bool Harvesting = false;
@@ -17,6 +19,7 @@ public class Unit : MonoBehaviour
     // [Header("Troop")]
 
     private UnitMovement UnitMover;
+    private NavMeshAgent UnitMeshAgent;
 
     void Start()
     {
@@ -24,13 +27,13 @@ public class Unit : MonoBehaviour
         SelectionManager.Instance.allUnitsList.Add(gameObject);
         TopBarManager.Instance.UpdatePopulation();
         UnitMover = this.GetComponentInParent<UnitMovement>();
-    }
+        UnitMeshAgent = this.GetComponentInParent<NavMeshAgent>();
 
-    public void Awake()
-    {
         // Setting stuff
+        Faction = unitInfo.Faction;
         Harvestor = unitInfo.Harvestor;
         CurrentHealth = unitInfo.MaxHealth;
+        UnitMeshAgent.speed = unitInfo.MovementSpeed;
     }
 
     // Update is called once per frame

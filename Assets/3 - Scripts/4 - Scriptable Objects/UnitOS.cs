@@ -23,7 +23,7 @@ public class UnitOS : ScriptableObject
     public MovementTypesEnum MovementType;
     public int Damage;
     public DamageTypeEnum DamageType;
-    public int MovementSpeed;
+    public float MovementSpeed;
     public int cost;
     public ResourceManager.ResourceTypes costType;
 }
