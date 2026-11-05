@@ -216,14 +216,4 @@ public class SelectionManager : MonoBehaviour
             selectedBuilding = null;
         }
     }
-
-    public void MakeUnitButton()
-    {
-        if (selectedBuilding == null)
-        {
-            Debug.LogWarning("No building is currently selected");
-            return;
-        }
-        selectedBuilding.StartUnitProduction();
-    }
 }

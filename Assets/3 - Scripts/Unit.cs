@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class Unit : MonoBehaviour
 {
     [Header("General")]
-    public UnitOS unitInfo;
+    public UnitSO unitInfo;
     public FactionManager.Factions Faction;
     public int CurrentHealth;
     public bool Harvestor = false;

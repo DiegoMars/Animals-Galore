@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Runtime.ExceptionServices;
-using NUnit.Framework.Constraints;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
@@ -16,27 +13,25 @@ public class ButtonManager : MonoBehaviour
     public GameObject UnitSelectionButtonPrefab;
     public Color32 ColorActive;
     public Color32 ColorInactive;
-    public List<ButtonStruct> activeButtons = new();
+    private List<ButtonStruct> activeButtons = new();
 
     private struct ButtonStruct
     {
-        private int Cost;
-        private ResourceManager.ResourceTypes CostType;
+        UnitSO unitSOb;
         private GameObject UnitButton;
         private Button ActualButton;
         public Color32 ColorActive;
         public Color32 ColorInactive;
-        public ButtonStruct(String Name, int cost,
-                            ResourceManager.ResourceTypes costType,
-                            GameObject UnitButtonPrefab, Transform Menu,
-                            Color32 colorActive, Color32 colorInactive)
+        public ButtonStruct(UnitSO unitOS, GameObject UnitButtonPrefab, Transform Menu,
+                            Color32 colorActive, Color32 colorInactive, UnityAction onClick)
         {
-            Cost = cost;
-            CostType = costType;
+            unitSOb = unitOS;
             UnitButton = Instantiate(UnitButtonPrefab, Menu);
             ActualButton = UnitButton.GetComponentInChildren<Button>();
             ColorActive = colorActive;
             ColorInactive = colorInactive;
+            
+            ActualButton.onClick.AddListener(onClick);
             
             bool nameFlag = true;
             bool unitCostFlag = true;
@@ -45,12 +40,12 @@ public class ButtonManager : MonoBehaviour
             {
                 if (textObject.gameObject.name == "UnitName")
                 {
-                    textObject.text = Name;
+                    textObject.text = unitSOb.name;
                     nameFlag = false;
                 }
                 if (textObject.gameObject.name == "UnitCost")
                 {
-                    textObject.text = $"{cost.ToString()} {costType.ToString()}";
+                    textObject.text = $"{unitSOb.cost.ToString()} {unitSOb.costType.ToString()}";
                     unitCostFlag = false;
                 }
             }
@@ -58,21 +53,15 @@ public class ButtonManager : MonoBehaviour
             {
                 Debug.Log("[Button Manager : Button Struct] 1 or more meshes not found");
             }
+            Debug.Log($"[Button Manager : Button Struct] End {unitSOb.name} button initialization");
         }
         
         public void CheckButton()
         {
 
-            if (ResourceManager.Instance.ResourceQuantity(CostType) >= Cost)
-            {
-                ActualButton.enabled = true; 
-                ActualButton.image.color = ColorActive;
-            }
-            else
-            {
-                ActualButton.enabled = false; 
-                ActualButton.image.color = ColorInactive;
-            }
+            bool canAfford = ResourceManager.Instance.ResourceQuantity(unitSOb.costType) >= unitSOb.cost;
+            ActualButton.enabled = canAfford; 
+            ActualButton.image.color = canAfford ? ColorActive : ColorInactive;
         }
         
         public void DestroyButton()
@@ -95,27 +84,44 @@ public class ButtonManager : MonoBehaviour
 
     public void Update()
     {
-        // if (ResourceManager.Instance.ResourceQuantity(UnitCostType) >= UnitCostValue)
-        // {
-        //     EnableButton();
-        // }
-        // else
-        // {
-        //     DisableButton();
-        // }
-    }
-
-    internal void SetUi(UnitOS[] UnitOSList)
-    {
-        foreach (UnitOS unit in UnitOSList)
+        if (activeButtons.Count > 0)
         {
-
+            foreach (ButtonStruct buttonStruct in activeButtons)
+            {
+                buttonStruct.CheckButton();
+            }
         }
     }
 
-    private bool SetButtonText(GameObject UnitButton, String UnitName, int UnitCost,
-                               ResourceManager.ResourceTypes UnitCostType)
+    internal void SetUi(Building building)
     {
-        throw new NotImplementedException();
+        Debug.Log("[Button Manager] Setting UI");
+        ClearButtons();
+        foreach (UnitSO unit in building.UnitOSList)
+        {
+            AddButton(unit, () => building.StartUnitProduction(unit));
+        }
+        UnitSelectionMenu.SetActive(true);
+    }
+
+    private void ClearButtons()
+    {
+        Debug.Log("[Button Manager] Clear Buttons");
+        if (activeButtons.Count > 0)
+        {
+            foreach (ButtonStruct buttonStruct in activeButtons)
+            {
+                buttonStruct.DestroyButton();
+            }
+            activeButtons.Clear();
+        }
+    }
+
+    private void AddButton(UnitSO unit, UnityAction onClick)
+    {
+        Debug.Log($"[Button Manager] Adding {unit.UnitName} button");
+        ButtonStruct thing = new ButtonStruct(unit, UnitSelectionButtonPrefab, UnitSelectionMenu.transform,
+                                              ColorActive, ColorInactive, onClick);
+        activeButtons.Add(thing);
     }
 }

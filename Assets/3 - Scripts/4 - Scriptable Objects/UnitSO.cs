@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "UnitOS", menuName = "Scriptable Objects/Unit")]
-public class UnitOS : ScriptableObject
+public class UnitSO : ScriptableObject
 {
     public enum MovementTypesEnum
     {

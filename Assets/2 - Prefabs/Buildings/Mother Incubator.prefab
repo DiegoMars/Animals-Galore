@@ -474,12 +474,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083df8bf28dd0324da06bbb5daa92508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Building
-  unitPrefab: {fileID: 0}
+  UnitOSList:
+  - {fileID: 11400000, guid: 939094582cc65bc45a69f9b318e9ac38, type: 2}
+  - {fileID: 11400000, guid: aa3b1c3ae10b837418e6b335c9d92edf, type: 2}
   spawnPoint: {fileID: 1981136233753135961}
   destinationPoint: {fileID: 3126818184846003076}
   CollectionType: 1
   collectionAnimator: {fileID: 2392983921912755970}
-  showMenu: 0
+  showMenu: 1
 --- !u!54 &6272874979411190526
 Rigidbody:
   m_ObjectHideFlags: 0

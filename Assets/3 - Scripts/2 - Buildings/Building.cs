@@ -7,7 +7,7 @@ using System.Runtime.ExceptionServices;
 
 public class Building : MonoBehaviour
 {
-    [SerializeField] public UnitOS[] UnitOSList;
+    [SerializeField] public UnitSO[] UnitOSList;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform destinationPoint;
     [SerializeField] internal ResourceManager.ResourceTypes CollectionType;
@@ -39,33 +39,33 @@ public class Building : MonoBehaviour
             Debug.Log("[Building] Empty UnitOSList");
             return;
         }
-        ButtonManager.Instance.SetUi(UnitOSList);
+        ButtonManager.Instance.SetUi(this);
+        Debug.Log("[Building] Setting UI");
     }
 
     // Need to redo
-    internal void StartUnitProduction()
+    internal void StartUnitProduction(UnitSO unit)
     {
-        throw new NotImplementedException();
-        // if (unitPrefab == null)
-        // {
-        //     Debug.LogWarning($"No unit prefab assigned to {gameObject.name}");
-        //     return;
-        // }
+        if (unit.prefab == null)
+        {
+            Debug.LogWarning($"No unit prefab assigned to {gameObject.name}");
+            return;
+        }
 
-        // if (spawnPoint == null)
-        // {
-        //     Debug.LogWarning($"No spawn point assigned to {gameObject.name}");
-        //     return;
-        // }
+        if (spawnPoint == null)
+        {
+            Debug.LogWarning($"No spawn point assigned to {gameObject.name}");
+            return;
+        }
 
-        // ResourceManager.Instance.SubtractResource(UnitCostType, UnitCostValue);
-        // GameObject newUnit = Instantiate(
-        //     unitPrefab,
-        //     spawnPoint.position,
-        //     spawnPoint.rotation
-        // );
-        // newUnit.GetComponent<NavMeshAgent>().SetDestination(destinationPoint.position);
-        // Debug.Log($"Created {newUnit.name} at {gameObject.name}");
+        ResourceManager.Instance.SubtractResource(unit.costType, unit.cost);
+        GameObject newUnit = Instantiate(
+            unit.prefab,
+            spawnPoint.position,
+            spawnPoint.rotation
+        );
+        newUnit.GetComponent<NavMeshAgent>().SetDestination(destinationPoint.position);
+        Debug.Log($"Created {newUnit.name} at {gameObject.name}");
     }
 
     internal void MoveDestination(Vector3 point)
