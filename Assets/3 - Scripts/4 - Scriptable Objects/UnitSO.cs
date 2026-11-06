@@ -15,15 +15,21 @@ public class UnitSO : ScriptableObject
         Range
     };
 
+    [Header("General")]
     public GameObject prefab;
     public string UnitName;
     public FactionManager.Factions Faction;
-    public bool Harvestor;
-    public int MaxHealth;
+    public bool Harvestor; // A troop otherwise.
     public MovementTypesEnum MovementType;
-    public int Damage;
     public DamageTypeEnum DamageType;
+    public ResourceManager.ResourceTypes costType;
+    [Header("Stats")]
+    public int MaxHealth;
+    public int Damage;
+    public float AttackRange;
+    public float AttackCooldown;
     public float MovementSpeed;
     public int cost;
-    public ResourceManager.ResourceTypes costType;
+    public float CollectionTime;
+    public float DetectionRange;
 }

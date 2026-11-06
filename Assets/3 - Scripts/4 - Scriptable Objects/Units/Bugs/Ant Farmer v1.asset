@@ -16,10 +16,14 @@ MonoBehaviour:
   UnitName: Ant Farmer
   Faction: 0
   Harvestor: 1
-  MaxHealth: 3
   MovementType: 0
-  Damage: 1
   DamageType: 0
+  costType: 3
+  MaxHealth: 3
+  Damage: 1
+  AttackRange: 2
+  AttackCooldown: 2
   MovementSpeed: 3
   cost: 5
-  costType: 3
+  CollectionTime: 5
+  DetectionRange: 17

@@ -12,6 +12,8 @@ public class FactionManager : MonoBehaviour
         MAMMALS
     }
 
+    public Factions PlayerFaction;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -22,5 +24,10 @@ public class FactionManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    public bool AreHostile(Factions first, Factions second)
+    {
+        return first != second;
     }
 }

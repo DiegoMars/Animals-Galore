@@ -16,10 +16,14 @@ MonoBehaviour:
   UnitName: Grasshopper
   Faction: 0
   Harvestor: 0
-  MaxHealth: 5
   MovementType: 0
-  Damage: 3
   DamageType: 0
+  costType: 3
+  MaxHealth: 5
+  Damage: 3
+  AttackRange: 2
+  AttackCooldown: 1
   MovementSpeed: 5
   cost: 10
-  costType: 3
+  CollectionTime: 0
+  DetectionRange: 20

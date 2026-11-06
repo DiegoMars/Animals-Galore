@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4661677695094075759}
   - component: {fileID: 4396551222616120660}
   - component: {fileID: 5749922546216928821}
+  - component: {fileID: 1263426073980653219}
   m_Layer: 7
   m_Name: Grasshopper V2
   m_TagString: Unit
@@ -96,8 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unit
   unitInfo: {fileID: 11400000, guid: aa3b1c3ae10b837418e6b335c9d92edf, type: 2}
-  Harvestor: 0
+  Faction: 0
+  PlayerControlled: 0
   CurrentHealth: 0
+  Harvestor: 0
   Harvesting: 0
   CarryingResource: 0
   ResourceTarget: {fileID: 0}
@@ -121,6 +124,21 @@ MonoBehaviour:
   clickable:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &1263426073980653219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309374741323540260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a6343ef71c4e74890d40fee8bd85bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCController
+  patrolPoints: []
+  patrolIndex: 0
+  currentState: 0
 --- !u!1 &4379927388880635884
 GameObject:
   m_ObjectHideFlags: 0

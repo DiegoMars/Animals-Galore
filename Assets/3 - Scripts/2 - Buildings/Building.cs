@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using System.Runtime.ExceptionServices;
+using UnityEngine.PlayerLoop;
 
 public class Building : MonoBehaviour
 {
@@ -64,6 +65,7 @@ public class Building : MonoBehaviour
             spawnPoint.position,
             spawnPoint.rotation
         );
+        newUnit.GetComponent<Unit>().SetPlayerControlled(true);
         newUnit.GetComponent<NavMeshAgent>().SetDestination(destinationPoint.position);
         Debug.Log($"Created {newUnit.name} at {gameObject.name}");
     }

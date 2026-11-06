@@ -7,10 +7,11 @@ public class Unit : MonoBehaviour
     [Header("General")]
     public UnitSO unitInfo;
     public FactionManager.Factions Faction;
+    public bool PlayerControlled = false;
     public int CurrentHealth;
-    public bool Harvestor = false;
 
     [Header("Harvestor")]
+    public bool Harvestor = false;
     public bool Harvesting = false;
     public ResourceManager.ResourceTypes CarryingResource = ResourceManager.ResourceTypes.NONE;
     public ResourceProducer ResourceTarget;
@@ -19,27 +20,41 @@ public class Unit : MonoBehaviour
     // [Header("Troop")]
 
     private UnitMovement UnitMover;
-    private NavMeshAgent UnitMeshAgent;
+    private NavMeshAgent UnitAgent;
 
     void Start()
     {
-        // Manager Stuff
-        SelectionManager.Instance.allUnitsList.Add(gameObject);
-        TopBarManager.Instance.UpdatePopulation();
-        UnitMover = this.GetComponentInParent<UnitMovement>();
-        UnitMeshAgent = this.GetComponentInParent<NavMeshAgent>();
+        if (PlayerControlled)
+        {
+            SelectionManager.Instance.allUnitsList.Add(gameObject);
+            TopBarManager.Instance.UpdatePopulation();
+        }
+    }
 
-        // Setting stuff
+    void Awake()
+    {
+        UnitMover = this.GetComponentInParent<UnitMovement>();
+        UnitAgent = this.GetComponentInParent<NavMeshAgent>();
+
         Faction = unitInfo.Faction;
         Harvestor = unitInfo.Harvestor;
         CurrentHealth = unitInfo.MaxHealth;
-        UnitMeshAgent.speed = unitInfo.MovementSpeed;
+        UnitAgent.speed = unitInfo.MovementSpeed;
     }
 
     // Update is called once per frame
     public void OnDestroy()
     {
-        SelectionManager.Instance.allUnitsList.Remove(gameObject);
+        if (PlayerControlled)
+        {
+            SelectionManager.Instance.allUnitsList.Remove(gameObject);
+            TopBarManager.Instance.UpdatePopulation();
+        }
+    }
+
+    public void SetPlayerControlled(bool playerControlled)
+    {
+        PlayerControlled = playerControlled;
     }
 
     internal void StartCollection(ResourceProducer resource)
@@ -74,5 +89,21 @@ public class Unit : MonoBehaviour
     {
         UnitMover.agent.SetDestination(ResourceTarget.transform.position);
         Debug.Log("[Unit] Harvesting resource");
+    }
+
+    public void Attack(Unit Target)
+    {
+        if (Target == null)
+            return;
+        Target.TakeDamage(unitInfo.Damage);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -928,6 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ec503a6702ad344af71a985bed2aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FactionManager
+  PlayerFaction: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,6 +1161,10 @@ PrefabInstance:
     - target: {fileID: 2786708654607541609, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396551222616120660, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
+      propertyPath: PlayerControlled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2705,6 +2710,10 @@ PrefabInstance:
     - target: {fileID: 2786708654607541609, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396551222616120660, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
+      propertyPath: PlayerControlled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
