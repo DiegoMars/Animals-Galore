@@ -1,8 +1,5 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
 public class NPCController : MonoBehaviour
 {
@@ -139,6 +136,60 @@ public class NPCController : MonoBehaviour
 
     private Unit FindHostileUnit()
     {
-        throw new NotImplementedException();
+        Collider[] nearbyColliders = Physics.OverlapSphere(
+            transform.position,
+            unit.unitInfo.DetectionRange
+        );
+
+        Unit closestUnit = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider nearbyCollider in nearbyColliders)
+        {
+            Unit possibleUnit = nearbyCollider.GetComponentInParent<Unit>();
+            if (possibleUnit == null || possibleUnit == unit || possibleUnit.CurrentHealth <= 0)
+            {
+                continue;
+            }
+
+            if (!FactionManager.Instance.AreHostile(
+                unit.Faction,
+                possibleUnit.Faction
+            ))
+            {
+                continue;
+            }
+
+            float distance = Vector3.Distance(
+                transform.position,
+                possibleUnit.transform.position
+            );
+        
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestUnit = possibleUnit;
+            }
+
+        }
+        return closestUnit;
+    }
+
+    private void OnDrawGmosSelected()
+    {
+        if (unit == null || unit.unitInfo == null)        
+            return;
+    
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(
+            transform.position,
+            unit.unitInfo.DetectionRange
+        );
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(
+            transform.position,
+            unit.unitInfo.AttackRange
+        );
     }
 }

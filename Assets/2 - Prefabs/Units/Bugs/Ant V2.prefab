@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5749922546216928821}
   - component: {fileID: 2034113767923155091}
   m_Layer: 7
-  m_Name: Ant Farmer V2
+  m_Name: Ant V2
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
