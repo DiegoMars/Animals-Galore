@@ -4,6 +4,8 @@ public class DiscoveryHandler : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
+        if (!this.GetComponentInParent<Unit>().PlayerControlled)
+            return;
         if (other.transform.parent)
             Debug.Log($"[Discovery Handler] {transform.parent.name}'s " +
                     $"Discovery mesh hit: {other.transform.parent.name}");

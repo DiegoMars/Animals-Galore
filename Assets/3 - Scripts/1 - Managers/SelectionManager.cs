@@ -158,6 +158,8 @@ public class SelectionManager : MonoBehaviour
 
     private void SelectUnit(GameObject unit, bool value)
     {
+        if (!unit.GetComponentInParent<Unit>().PlayerControlled)
+            return;
         if (value)
         {
             unitsSelected.Add(unit);

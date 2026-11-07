@@ -19,7 +19,7 @@ MonoBehaviour:
   MovementType: 0
   DamageType: 0
   costType: 3
-  MaxHealth: 5
+  MaxHealth: 7
   Damage: 3
   AttackRange: 2
   AttackCooldown: 1

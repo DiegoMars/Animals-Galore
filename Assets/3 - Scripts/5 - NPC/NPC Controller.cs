@@ -80,7 +80,7 @@ public class NPCController : MonoBehaviour
             return;
         }
 
-        float distance = Vector3.Distance( transform.position, target.transform.position);
+        float distance = Vector3.Distance(unit.transform.position, target.transform.position);
 
         if (distance <= unit.unitInfo.AttackRange)
         {
@@ -106,7 +106,7 @@ public class NPCController : MonoBehaviour
             State = NPCState.Returning;
             return;
         }
-        float distance = Vector3.Distance( transform.position, target.transform.position);
+        float distance = Vector3.Distance(unit.transform.position, target.transform.position);
         if (distance > unit.unitInfo.AttackRange)
         {
             State = NPCState.Chasing;
@@ -122,6 +122,15 @@ public class NPCController : MonoBehaviour
 
     private void ReturnToPatrol()
     {
+        Unit detectedUnit = FindHostileUnit();
+
+        if (detectedUnit != null)
+        {
+            target = detectedUnit;
+            State = NPCState.Chasing;
+            return;
+        }
+
         if (patrolPoints == null || patrolPoints.Length == 0)
         {
             State = NPCState.Patrolling;
@@ -137,8 +146,10 @@ public class NPCController : MonoBehaviour
     private Unit FindHostileUnit()
     {
         Collider[] nearbyColliders = Physics.OverlapSphere(
-            transform.position,
-            unit.unitInfo.DetectionRange
+            unit.transform.position,
+            unit.unitInfo.DetectionRange,
+            Physics.AllLayers,
+            QueryTriggerInteraction.Ignore
         );
 
         Unit closestUnit = null;
@@ -161,7 +172,7 @@ public class NPCController : MonoBehaviour
             }
 
             float distance = Vector3.Distance(
-                transform.position,
+                unit.transform.position,
                 possibleUnit.transform.position
             );
         
@@ -175,20 +186,20 @@ public class NPCController : MonoBehaviour
         return closestUnit;
     }
 
-    private void OnDrawGmosSelected()
+    private void OnDrawGizmosSelected()
     {
         if (unit == null || unit.unitInfo == null)        
             return;
     
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(
-            transform.position,
+            unit.transform.position,
             unit.unitInfo.DetectionRange
         );
 
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(
-            transform.position,
+            unit.transform.position,
             unit.unitInfo.AttackRange
         );
     }
