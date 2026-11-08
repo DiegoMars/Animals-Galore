@@ -1,14 +1,10 @@
-using TMPro;
 using UnityEngine.AI;
 using UnityEngine;
-using System;
-using UnityEngine.UI;
-using System.Runtime.ExceptionServices;
-using UnityEngine.PlayerLoop;
 
 public class Building : MonoBehaviour
 {
     [SerializeField] public UnitSO[] UnitOSList;
+    [SerializeField] public FactionManager.Factions faction;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform destinationPoint;
     [SerializeField] internal ResourceManager.ResourceTypes CollectionType;
@@ -21,12 +17,12 @@ public class Building : MonoBehaviour
     void Start()
     {
         // Manager
-        BuildManager.Instance.allBuildingsList.Add(gameObject);
+        BuildManager.Instance.AddBuildingToList(faction, gameObject);
     }
 
     public void OnDestroy()
     {
-        BuildManager.Instance.allBuildingsList.Remove(gameObject);
+        BuildManager.Instance.RemoveBuildingToList(faction, gameObject);
     }
 
     public void SetBuildingUI() {
@@ -59,13 +55,12 @@ public class Building : MonoBehaviour
             return;
         }
 
-        ResourceManager.Instance.SubtractResource(unit.costType, unit.cost);
+        ResourceManager.Instance.SubtractResource(faction, unit.costType, unit.cost);
         GameObject newUnit = Instantiate(
             unit.prefab,
             spawnPoint.position,
             spawnPoint.rotation
         );
-        newUnit.GetComponent<Unit>().SetPlayerControlled(true);
         newUnit.GetComponent<NavMeshAgent>().SetDestination(destinationPoint.position);
         Debug.Log($"Created {newUnit.name} at {gameObject.name}");
     }
@@ -78,7 +73,7 @@ public class Building : MonoBehaviour
     internal void CollectResource(ResourceManager.ResourceTypes resource)
     {
         Debug.Log($"[Building] Collected {resource}");
-        ResourceManager.Instance.AddResource(resource, 10);
+        ResourceManager.Instance.AddResource(faction, resource, 10);
         TriggerCollection();
     }
 

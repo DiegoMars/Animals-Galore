@@ -26,6 +26,24 @@ public class FactionManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        // NEED TO CHANGE HOW THIS WORKS SOMEHOW
+        InitFactionInManagers(Factions.BUGS);
+        InitFactionInManagers(Factions.REPTILES);
+    }
+
+    private void InitFactionInManagers(Factions faction)
+    {
+        ResourceManager.Instance.InitFactionResourceState(faction);
+        BuildManager.Instance.InitFactionBuildingList(faction);
+    }
+
+    public bool IsPlayer(Factions faction)
+    {
+        return faction == PlayerFaction;
+    }
+
     public bool AreHostile(Factions first, Factions second)
     {
         return first != second;

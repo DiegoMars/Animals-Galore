@@ -59,7 +59,7 @@ public class ButtonManager : MonoBehaviour
         public void CheckButton()
         {
 
-            bool canAfford = ResourceManager.Instance.ResourceQuantity(unitSOb.costType) >= unitSOb.cost;
+            bool canAfford = ResourceManager.Instance.ResourceQuantity(FactionManager.Instance.PlayerFaction, unitSOb.costType) >= unitSOb.cost;
             ActualButton.enabled = canAfford; 
             ActualButton.image.color = canAfford ? ColorActive : ColorInactive;
         }

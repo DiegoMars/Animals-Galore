@@ -7,7 +7,6 @@ public class Unit : MonoBehaviour
     [Header("General")]
     public UnitSO unitInfo;
     public FactionManager.Factions Faction;
-    public bool PlayerControlled = false;
     public int CurrentHealth;
 
     [Header("Harvestor")]
@@ -19,11 +18,13 @@ public class Unit : MonoBehaviour
 
     // [Header("Troop")]
 
+    private bool PlayerControlled;
     private UnitMovement UnitMover;
     private NavMeshAgent UnitAgent;
 
     void Start()
     {
+        PlayerControlled = Faction == FactionManager.Instance.PlayerFaction;
         if (PlayerControlled)
         {
             SelectionManager.Instance.allUnitsList.Add(gameObject);
@@ -52,17 +53,12 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void SetPlayerControlled(bool playerControlled)
-    {
-        PlayerControlled = playerControlled;
-    }
-
     internal void StartCollection(ResourceProducer resource)
     {
         ResourceTarget = resource;
         ResourceManager.ResourceTypes resourceType = ResourceTarget.ResourceType;
         Vector3 targetPos = ResourceTarget.transform.position;
-        Collector = BuildManager.Instance.FindNearestCollector(targetPos, resourceType);
+        Collector = BuildManager.Instance.FindNearestCollector(Faction, targetPos, resourceType);
         Debug.Log($"[Unit] Collector: {Collector}");
         Collector.TriggerCollection();
         Harvesting = true;

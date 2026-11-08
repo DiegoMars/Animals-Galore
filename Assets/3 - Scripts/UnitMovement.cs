@@ -11,6 +11,7 @@ public class UnitMovement : MonoBehaviour
 
     private Unit ParentUnit;
     private bool harvestor;
+    private bool IsPlayer;
 
     private void Start()
     {
@@ -18,11 +19,12 @@ public class UnitMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         ParentUnit = this.GetComponentInParent<Unit>();
         harvestor = ParentUnit.Harvestor;
+        IsPlayer = FactionManager.Instance.IsPlayer(this.GetComponentInParent<Unit>().Faction);
     }
 
     private void Update()
     {
-        if (ParentUnit.PlayerControlled && Input.GetMouseButtonDown(1))
+        if (IsPlayer && Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);

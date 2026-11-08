@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +12,8 @@ public class BuildManager : MonoBehaviour
     public bool isPlacing;
     private LayerMask Ground;
     private LayerMask Clickable;
-    public List<GameObject> allBuildingsList = new List<GameObject>();
+    [SerializeField] private Dictionary<FactionManager.Factions, List<GameObject>> factionBuildingsList
+        = new Dictionary<FactionManager.Factions, List<GameObject>>();
 
     [Header("Prefabs")]
     public GameObject FarmPrefab; // 0
@@ -121,6 +123,42 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    public void InitFactionBuildingList(FactionManager.Factions faction)
+    {
+        if (!factionBuildingsList.TryAdd(faction, new List<GameObject>()))
+            Debug.Log($"[Resource Manager] Failed to add {faction} states");
+    }
+
+    private List<GameObject> GetFactionBuildingList(FactionManager.Factions faction)
+    {
+        if (factionBuildingsList.TryGetValue(faction, out List<GameObject> buildingList))
+            return buildingList;
+        Debug.LogError($"[Build Manager] No building list for {faction}");
+        return null;
+    }
+
+    public void AddBuildingToList(FactionManager.Factions faction, GameObject building)
+    {
+        List<GameObject> buildingList = GetFactionBuildingList(faction);
+        if (buildingList != null)
+        {
+            buildingList.Add(building);
+            return;
+        }
+        Debug.Log("[Build Manager] No faction building list to add to");
+    }
+
+    public void RemoveBuildingToList(FactionManager.Factions faction, GameObject building)
+    {
+        List<GameObject> buildingList = GetFactionBuildingList(faction);
+        if (buildingList != null)
+        {
+            buildingList.Remove(building);
+            return;
+        }
+        Debug.Log("[Build Manager] No faction building list to remove from");
+    }
+
     public void OnBuildingSelection(int index)
     {
         switch (index)
@@ -181,10 +219,13 @@ public class BuildManager : MonoBehaviour
     }
 
     // Will enventually be expanded to find only a specific type of building
-    internal Building FindNearestCollector(Vector3 pos, ResourceManager.ResourceTypes resourceType) {
+    internal Building FindNearestCollector(FactionManager.Factions faction, Vector3 pos,
+                                           ResourceManager.ResourceTypes resourceType)
+    {
         float closestDistance = Mathf.Infinity;
-        Building closestCollector = allBuildingsList[0].GetComponent<Building>();
-        foreach (GameObject building in allBuildingsList)
+        List<GameObject> buildingList = GetFactionBuildingList(faction);
+        Building closestCollector = buildingList[0].GetComponent<Building>();
+        foreach (GameObject building in buildingList)
         {
             Building build = building.GetComponent<Building>();
             ResourceManager.ResourceTypes buildingType = build.CollectionType;

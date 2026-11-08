@@ -158,7 +158,7 @@ public class SelectionManager : MonoBehaviour
 
     private void SelectUnit(GameObject unit, bool value)
     {
-        if (!unit.GetComponentInParent<Unit>().PlayerControlled)
+        if (!FactionManager.Instance.IsPlayer(unit.GetComponentInParent<Unit>().Faction))
             return;
         if (value)
         {
@@ -196,6 +196,8 @@ public class SelectionManager : MonoBehaviour
 
     private void SelectBuilding(Building building, bool value)
     {
+        if (!FactionManager.Instance.IsPlayer(building.faction))
+            return;
         if (value)
         {
             DeselectAll();

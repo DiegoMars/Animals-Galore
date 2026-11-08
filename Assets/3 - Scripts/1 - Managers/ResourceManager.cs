@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -12,12 +11,17 @@ public class ResourceManager : MonoBehaviour
     public List<GameObject> CollectedResources = new List<GameObject>();
 
     [Header("Collected Resources")]
-    public TopBarManager TopBar;
-    public int WoodQuantity;
-    public int FoodQuantity;
-    public int StoneQuantity;
-    public int TechPointsQuantity;
+    [SerializeField] private Dictionary<FactionManager.Factions, FactionResourceState> factionResources
+        = new Dictionary<FactionManager.Factions, FactionResourceState>();
 
+    [Serializable]
+    public class FactionResourceState
+    {
+        public int wood;
+        public int food;
+        public int stone;
+        public int tech;
+    }
     public enum ResourceTypes
     {
         NONE,
@@ -40,12 +44,20 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    void Start()
+    public void InitFactionResourceState(FactionManager.Factions faction)
     {
-        WoodQuantity = 0;
-        FoodQuantity = 0;
-        StoneQuantity = 0;
-        TechPointsQuantity = 0;
+        if (!factionResources.TryAdd(faction, new FactionResourceState()))
+            Debug.Log($"[Resource Manager] Failed to add {faction} states");
+    }
+
+    private FactionResourceState GetFactionResources(FactionManager.Factions faction)
+    {
+        if (factionResources.TryGetValue(faction, out FactionResourceState state))
+        {
+            return state;
+        }
+        Debug.LogError($"[Resource Manager] No resource state exists for {faction}");
+        return null;
     }
 
     internal void DiscoverResource(ResourceProducer resource)
@@ -77,73 +89,72 @@ public class ResourceManager : MonoBehaviour
         return false;
     }
 
-    internal int ResourceQuantity(ResourceTypes resource)
+    internal int ResourceQuantity(FactionManager.Factions faction, ResourceTypes resource)
     {
+        FactionResourceState state = GetFactionResources(faction);
         switch (resource)
         {
             case ResourceTypes.WOOD: 
-                return WoodQuantity;
+                return state.wood;
             case ResourceTypes.FOOD: 
-                return FoodQuantity;
+                return state.food;
             case ResourceTypes.STONE: 
-                return StoneQuantity;
+                return state.stone;
             case ResourceTypes.TECH: 
-                return TechPointsQuantity;
+                return state.tech;
             default:
                 Debug.Log($"[Resource Manager] {resource} is not valid");
                 return -1;
         }
     }
 
-    internal void AddResource(ResourceTypes resource, int quantity)
+    internal void AddResource(FactionManager.Factions faction, ResourceTypes resource, int quantity)
     {
+        FactionResourceState state = GetFactionResources(faction);
         switch (resource)
         {
             case ResourceTypes.WOOD: 
-                WoodQuantity += quantity;
-                TopBar.SetWood(WoodQuantity.ToString());
+                state.wood += quantity;
                 break;
             case ResourceTypes.FOOD: 
-                FoodQuantity += quantity;
-                TopBar.SetFood(FoodQuantity.ToString());
+                state.food += quantity;
                 break;
             case ResourceTypes.STONE: 
-                StoneQuantity += quantity;
-                TopBar.SetStone(StoneQuantity.ToString());
+                state.stone += quantity;
                 break;
             case ResourceTypes.TECH: 
-                TechPointsQuantity += quantity;
-                TopBar.SetTech(TechPointsQuantity.ToString());
+                state.tech += quantity;
                 break;
             default:
                 Debug.Log($"[Resource Manager] {resource} is not valid");
                 break;
         }
+        if (faction == FactionManager.Instance.PlayerFaction)
+            TopBarManager.Instance.UpdateBar(state);
     }
 
-    internal void SubtractResource(ResourceTypes resource, int quantity)
+    internal void SubtractResource(FactionManager.Factions faction, ResourceTypes resource, int quantity)
     {
+        FactionResourceState state = GetFactionResources(faction);
         switch (resource)
         {
             case ResourceTypes.WOOD: 
-                WoodQuantity -= quantity;
-                TopBar.SetWood(WoodQuantity.ToString());
+                state.wood -= quantity;
                 break;
             case ResourceTypes.FOOD: 
-                FoodQuantity -= quantity;
-                TopBar.SetFood(FoodQuantity.ToString());
+                state.food -= quantity;
                 break;
             case ResourceTypes.STONE: 
-                StoneQuantity -= quantity;
-                TopBar.SetStone(StoneQuantity.ToString());
+                state.stone -= quantity;
                 break;
             case ResourceTypes.TECH: 
-                TechPointsQuantity -= quantity;
-                TopBar.SetTech(TechPointsQuantity.ToString());
+                state.tech -= quantity;
                 break;
             default:
                 Debug.Log($"[Resource Manager] {resource} is not valid");
                 break;
         }
+        if (faction == FactionManager.Instance.PlayerFaction)
+            TopBarManager.Instance.UpdateBar(state);
     }
 }

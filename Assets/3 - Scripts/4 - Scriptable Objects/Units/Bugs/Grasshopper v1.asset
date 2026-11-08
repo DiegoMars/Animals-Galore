@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Grasshopper v1
   m_EditorClassIdentifier: Assembly-CSharp::UnitOS
   prefab: {fileID: 309374741323540260, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
-  UnitName: Grasshopper
+  UnitName: Grasshopper Scout
   Faction: 0
   Harvestor: 0
   MovementType: 0

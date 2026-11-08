@@ -8,13 +8,19 @@ public class NPCController : MonoBehaviour
         Patrolling,
         Chasing,
         Attacking,
-        Returning
+        Returning,
+        FindingResource,
+        MovingToResource,
+        Harvesting,
+        ReturningToBase,
+        Depositing
     }
 
     [Header("Patrol")]
     public Transform[] patrolPoints;
     public int patrolIndex;
     public NPCState State = NPCState.Patrolling;
+    public float MaxChaseDistance = 30f;
     private Unit unit;
     private NavMeshAgent UnitAgent;
     private Unit target;
@@ -28,10 +34,13 @@ public class NPCController : MonoBehaviour
 
     void Update()
     {
-        if (unit.PlayerControlled)
+        if (this.GetComponentInParent<Unit>().Faction == FactionManager.Instance.PlayerFaction)
             return;
         if (unit.Harvestor)
+        {
+            UpdateHarvester();
             return;
+        }
 
         switch (State)
         {
@@ -48,6 +57,11 @@ public class NPCController : MonoBehaviour
                 ReturnToPatrol();
                 break;
         }
+    }
+
+    private void UpdateHarvester()
+    {
+        
     }
 
     private void Patrol()
@@ -80,16 +94,18 @@ public class NPCController : MonoBehaviour
             return;
         }
 
-        float distance = Vector3.Distance(unit.transform.position, target.transform.position);
+        float distanceFromTarget = Vector3.Distance(unit.transform.position, target.transform.position);
+        // Breaks the code
+        // float distanceFromPatrol = Vector3.Distance(unit.transform.position, patrolPoints[patrolIndex].transform.position);
 
-        if (distance <= unit.unitInfo.AttackRange)
+        if (distanceFromTarget <= unit.unitInfo.AttackRange)
         {
             UnitAgent.ResetPath();
             State = NPCState.Attacking;
             return;
         }
 
-        if (distance > unit.unitInfo.DetectionRange * 1.5f)
+        if (distanceFromTarget > unit.unitInfo.DetectionRange * 1.5f)
         {
             target = null;
             State = NPCState.Returning;

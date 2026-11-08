@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -44,21 +43,12 @@ public class TopBarManager : MonoBehaviour
         Age.text = ages[agesPos];
     }
 
-    public void SetWood(String value)
+    public void UpdateBar(ResourceManager.FactionResourceState state)
     {
-        WoodQuantity.SetText(value);
-    }
-    public void SetFood(String value)
-    {
-        FoodQuantity.SetText(value);
-    }
-    public void SetStone(String value)
-    {
-        StoneQuantity.SetText(value);
-    }
-    public void SetTech(String value)
-    {
-        TechPointsQuantity.SetText(value);
+        WoodQuantity.SetText(state.wood.ToString());
+        FoodQuantity.SetText(state.food.ToString());
+        StoneQuantity.SetText(state.stone.ToString());
+        TechPointsQuantity.SetText(state.tech.ToString());
     }
     public void UpdatePopulation()
     {

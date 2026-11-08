@@ -2,9 +2,17 @@ using UnityEngine;
 
 public class DiscoveryHandler : MonoBehaviour
 {
+
+    private bool IsPlayer;
+    
+    private void Start()
+    {
+        IsPlayer = FactionManager.Instance.IsPlayer(this.GetComponentInParent<Unit>().Faction);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!this.GetComponentInParent<Unit>().PlayerControlled)
+        if (!IsPlayer)
             return;
         if (other.transform.parent)
             Debug.Log($"[Discovery Handler] {transform.parent.name}'s " +
