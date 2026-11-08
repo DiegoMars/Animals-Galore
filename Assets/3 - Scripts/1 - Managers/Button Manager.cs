@@ -40,7 +40,7 @@ public class ButtonManager : MonoBehaviour
             {
                 if (textObject.gameObject.name == "UnitName")
                 {
-                    textObject.text = unitSOb.name;
+                    textObject.text = unitSOb.UnitName;
                     nameFlag = false;
                 }
                 if (textObject.gameObject.name == "UnitCost")

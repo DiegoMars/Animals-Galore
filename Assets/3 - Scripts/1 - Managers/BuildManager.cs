@@ -43,6 +43,12 @@ public class BuildManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        foreach (FactionManager.Factions faction in
+                Enum.GetValues(typeof(FactionManager.Factions)))
+        {
+            factionBuildingsList.Add(faction, new List<GameObject>());
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -121,12 +127,6 @@ public class BuildManager : MonoBehaviour
                 FollowObject.SetActive(false);
             }
         }
-    }
-
-    public void InitFactionBuildingList(FactionManager.Factions faction)
-    {
-        if (!factionBuildingsList.TryAdd(faction, new List<GameObject>()))
-            Debug.Log($"[Resource Manager] Failed to add {faction} states");
     }
 
     private List<GameObject> GetFactionBuildingList(FactionManager.Factions faction)
@@ -223,11 +223,11 @@ public class BuildManager : MonoBehaviour
                                            ResourceManager.ResourceTypes resourceType)
     {
         float closestDistance = Mathf.Infinity;
+        Building closestCollector = null;
         List<GameObject> buildingList = GetFactionBuildingList(faction);
-        Building closestCollector = buildingList[0].GetComponent<Building>();
         foreach (GameObject building in buildingList)
         {
-            Building build = building.GetComponent<Building>();
+            Building build = building.GetComponentInParent<Building>();
             ResourceManager.ResourceTypes buildingType = build.CollectionType;
             if (buildingType != resourceType && buildingType != ResourceManager.ResourceTypes.ALL)
             {
@@ -238,6 +238,7 @@ public class BuildManager : MonoBehaviour
             if (distanceSq < closestDistance)
             {
                 closestCollector = build;
+                closestDistance = distanceSq;
             }
         }
         return closestCollector;

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,6 +28,9 @@ public class NPCController : MonoBehaviour
     private Unit target;
     private float nextAttackTime;
 
+    [Header("Harvester")]
+    private ResourceProducer resourceTarget;
+
     void Awake()
     {
         unit = this.GetComponentInParent<Unit>();
@@ -36,6 +41,7 @@ public class NPCController : MonoBehaviour
     {
         if (this.GetComponentInParent<Unit>().Faction == FactionManager.Instance.PlayerFaction)
             return;
+
         if (unit.Harvestor)
         {
             UpdateHarvester();
@@ -61,7 +67,19 @@ public class NPCController : MonoBehaviour
 
     private void UpdateHarvester()
     {
-        
+        if (unit.Harvesting)
+        {
+            return;
+        }        
+
+        ResourceProducer resource = FindClosestDiscoveredResource();
+
+        if (resource == null)
+        {
+            return;
+        }
+
+        unit.StartCollection(resource);
     }
 
     private void Patrol()
@@ -179,10 +197,7 @@ public class NPCController : MonoBehaviour
                 continue;
             }
 
-            if (!FactionManager.Instance.AreHostile(
-                unit.Faction,
-                possibleUnit.Faction
-            ))
+            if (unit.Faction == possibleUnit.Faction)
             {
                 continue;
             }
@@ -200,6 +215,31 @@ public class NPCController : MonoBehaviour
 
         }
         return closestUnit;
+    }
+
+    private ResourceProducer FindClosestDiscoveredResource()
+    {
+        List<GameObject> DiscoveredResources
+            = ResourceManager.Instance.GetFactionDiscoveredResourcesList(unit.Faction);
+
+        ResourceProducer closestResource = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject resourceObject in DiscoveredResources)
+        {
+            ResourceProducer resource = resourceObject.GetComponentInParent<ResourceProducer>();
+            if (resource == null || resource.presentResourcesList.Count == 0)
+                continue;
+            Vector3 direction = resource.transform.position - unit.transform.position;
+            float distanceSq = direction.sqrMagnitude;
+            if (distanceSq < closestDistance)
+            {
+                closestResource = resource;
+                closestDistance = distanceSq;
+            }
+        }
+
+        return closestResource;
     }
 
     private void OnDrawGizmosSelected()

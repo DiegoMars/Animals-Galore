@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -7,7 +8,8 @@ public class ResourceManager : MonoBehaviour
     [Header("General")]
     public static ResourceManager Instance {get; set;}
     public List<GameObject> AllResources = new List<GameObject>();
-    public List<GameObject> DiscoveredResources = new List<GameObject>();
+    [SerializeField] private Dictionary<FactionManager.Factions, List<GameObject>> factionDiscoveredResources
+        = new Dictionary<FactionManager.Factions, List<GameObject>>();
     public List<GameObject> CollectedResources = new List<GameObject>();
 
     [Header("Collected Resources")]
@@ -42,12 +44,13 @@ public class ResourceManager : MonoBehaviour
         {
             Instance = this;
         }
-    }
 
-    public void InitFactionResourceState(FactionManager.Factions faction)
-    {
-        if (!factionResources.TryAdd(faction, new FactionResourceState()))
-            Debug.Log($"[Resource Manager] Failed to add {faction} states");
+        foreach (FactionManager.Factions faction in
+                Enum.GetValues(typeof(FactionManager.Factions)))
+        {
+            factionResources.Add(faction, new FactionResourceState());
+            factionDiscoveredResources.Add(faction, new List<GameObject>());
+        }
     }
 
     private FactionResourceState GetFactionResources(FactionManager.Factions faction)
@@ -60,33 +63,33 @@ public class ResourceManager : MonoBehaviour
         return null;
     }
 
-    internal void DiscoverResource(ResourceProducer resource)
+    public List<GameObject> GetFactionDiscoveredResourcesList(FactionManager.Factions faction)
     {
-        GameObject resourceParent = resource.gameObject;
-        if (!DiscoveredResources.Contains(resourceParent))
-        {
-            DiscoveredResources.Add(resourceParent);
-            resource.SetDiscovered(true);
-        }
-        else
-        {
-            return;
-        }
+        if (factionDiscoveredResources.TryGetValue(faction, out List<GameObject> resourceList))
+            return resourceList;
+        Debug.LogError($"[Resource Manager] No building list for {faction}");
+        return null;
     }
 
-    internal bool IsResourceDiscovered(ResourceProducer resource)
+    internal void DiscoverResource(FactionManager.Factions faction, ResourceProducer resource)
     {
-        foreach (GameObject discoveredResourceObject in DiscoveredResources)
-        {
-            ResourceProducer discoveredResource = discoveredResourceObject.GetComponentInParent<ResourceProducer>();
-            if (discoveredResource == resource)
-            {
-                Debug.Log($"[Resource Manager] {resource} is discovered");
-                return true;
-            }
-        }
-        Debug.Log($"[Resource Manager] {resource} is not discovered");
-        return false;
+        List<GameObject> DiscoveredRes = GetFactionDiscoveredResourcesList(faction);
+        GameObject resourceParent = resource.gameObject;
+        if (DiscoveredRes.Contains(resourceParent))
+            return;
+
+        DiscoveredRes.Add(resourceParent);
+        if (FactionManager.Instance.IsPlayer(faction))
+            resource.SetDiscovered(true);
+    }
+
+    internal bool IsResourceDiscovered(FactionManager.Factions faction, ResourceProducer resource)
+    {
+        List<GameObject> DiscoveredResources = GetFactionDiscoveredResourcesList(faction);
+        GameObject resourceParent = resource.gameObject;
+        bool value = DiscoveredResources.Contains(resourceParent);
+        Debug.Log($"[Resource Manager] {faction} discovered {resource}: {value}");
+        return value;
     }
 
     internal int ResourceQuantity(FactionManager.Factions faction, ResourceTypes resource)

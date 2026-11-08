@@ -46,11 +46,9 @@ public class Unit : MonoBehaviour
     // Update is called once per frame
     public void OnDestroy()
     {
-        if (PlayerControlled)
-        {
-            SelectionManager.Instance.allUnitsList.Remove(gameObject);
-            TopBarManager.Instance.UpdatePopulation();
-        }
+        SelectionManager.Instance.allUnitsList.Remove(gameObject);
+        SelectionManager.Instance.unitsSelected.Remove(gameObject);
+        TopBarManager.Instance.UpdatePopulation();
     }
 
     internal void StartCollection(ResourceProducer resource)

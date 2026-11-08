@@ -98,7 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Unit
   unitInfo: {fileID: 11400000, guid: a5f685784a528464d901175c80d50650, type: 2}
   Faction: 2
-  PlayerControlled: 0
   CurrentHealth: 0
   Harvestor: 0
   Harvesting: 0
@@ -117,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749329ddbc7bf814bb21f11dd98eeca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitMovement
-  agent: {fileID: 0}
+  agent: {fileID: 4661677695094075759}
   ground:
     serializedVersion: 2
     m_Bits: 64
@@ -139,6 +138,7 @@ MonoBehaviour:
   patrolPoints: []
   patrolIndex: 0
   State: 0
+  MaxChaseDistance: 30
 --- !u!1 &4379927388880635884
 GameObject:
   m_ObjectHideFlags: 0

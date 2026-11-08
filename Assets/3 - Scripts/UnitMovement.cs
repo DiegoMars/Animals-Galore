@@ -31,7 +31,7 @@ public class UnitMovement : MonoBehaviour
             if (harvestor && Physics.Raycast(ray, out hit, Mathf.Infinity, clickable) && hit.collider.CompareTag("Resource"))
             {
                 ResourceProducer resource = hit.collider.GetComponentInParent<ResourceProducer>();
-                if (ResourceManager.Instance.IsResourceDiscovered(resource))
+                if (ResourceManager.Instance.IsResourceDiscovered(ParentUnit.Faction, resource))
                     ParentUnit.StartCollection(resource);
             }
             else if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
