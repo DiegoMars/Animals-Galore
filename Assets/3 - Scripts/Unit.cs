@@ -21,6 +21,7 @@ public class Unit : MonoBehaviour
     private bool PlayerControlled;
     private UnitMovement UnitMover;
     private NavMeshAgent UnitAgent;
+    [SerializeField] private Animator attackAnimator;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class Unit : MonoBehaviour
     {
         UnitMover = this.GetComponentInParent<UnitMovement>();
         UnitAgent = this.GetComponentInParent<NavMeshAgent>();
+        attackAnimator = this.GetComponentInChildren<Animator>();
 
         Faction = unitInfo.Faction;
         Harvestor = unitInfo.Harvestor;
@@ -89,6 +91,7 @@ public class Unit : MonoBehaviour
     {
         if (Target == null)
             return;
+        attackAnimator.SetTrigger("Attacking");
         Target.TakeDamage(unitInfo.Damage);
     }
 

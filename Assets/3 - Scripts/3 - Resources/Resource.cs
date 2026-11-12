@@ -6,7 +6,7 @@ public class Resource : MonoBehaviour
     
     internal void TriggerCollection()
     {
-        Debug.Log("[Resource] Triggering Animation");
+        Debug.Log("[Resource] Triggering Animation")    ;
         berryAnimator.SetTrigger("Collecting");
     }
 }

@@ -98,13 +98,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Unit
   unitInfo: {fileID: 11400000, guid: 939094582cc65bc45a69f9b318e9ac38, type: 2}
   Faction: 0
-  PlayerControlled: 0
   CurrentHealth: 0
   Harvestor: 0
   Harvesting: 0
   CarryingResource: 0
   ResourceTarget: {fileID: 0}
   Collector: {fileID: 0}
+  attackAnimator: {fileID: 0}
 --- !u!114 &5749922546216928821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCController
   patrolPoints: []
   patrolIndex: 0
-  currentState: 0
+  State: 0
+  MaxChaseDistance: 30
 --- !u!1 &4379927388880635884
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,10 +379,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3436f54dc2b8fec4684bfdac243d1f17, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4392127773564518158}
   m_SourcePrefab: {fileID: 100100000, guid: 3436f54dc2b8fec4684bfdac243d1f17, type: 3}
 --- !u!4 &8281129716866886536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3436f54dc2b8fec4684bfdac243d1f17, type: 3}
   m_PrefabInstance: {fileID: 8459663248905817187}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8766163451110781234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3436f54dc2b8fec4684bfdac243d1f17, type: 3}
+  m_PrefabInstance: {fileID: 8459663248905817187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4392127773564518158
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8766163451110781234}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4a1173d07f6e3e541bc74f6455e3a114, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

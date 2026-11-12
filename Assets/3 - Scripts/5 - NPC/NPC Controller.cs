@@ -146,7 +146,7 @@ public class NPCController : MonoBehaviour
             State = NPCState.Chasing;
             return;
         }
-        UnitAgent.ResetPath();
+        // UnitAgent.ResetPath();
         if (Time.time >= nextAttackTime)
         {
             unit.Attack(target);
