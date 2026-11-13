@@ -14,15 +14,21 @@ public class Building : MonoBehaviour
     public Transform SpawnPoint => spawnPoint;
     public Transform DestinationPoint => destinationPoint;
 
-    void Start()
-    {
-        // Manager
-        BuildManager.Instance.AddBuildingToList(faction, gameObject);
-    }
-
     public void OnDestroy()
     {
-        BuildManager.Instance.RemoveBuildingToList(faction, gameObject);
+        BuildManager.Instance.RemoveBuildingFromList(faction, gameObject);
+    }
+
+    // For initial buildings to be added
+    public void Initialize()
+    {
+        BuildManager.Instance.AddBuildingToList(faction, gameObject);
+    }
+    // For all buildings after the start of the game
+    public void Initialize(FactionManager.Factions faction)
+    {
+        this.faction = faction;
+        BuildManager.Instance.AddBuildingToList(faction, gameObject);
     }
 
     public void SetBuildingUI() {
@@ -40,7 +46,6 @@ public class Building : MonoBehaviour
         Debug.Log("[Building] Setting UI");
     }
 
-    // Need to redo
     internal void StartUnitProduction(UnitSO unit)
     {
         if (unit.prefab == null)

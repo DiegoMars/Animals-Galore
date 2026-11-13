@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 3480531395563198865}
   - component: {fileID: 6973782327760487219}
   - component: {fileID: 5313920126005485956}
-  - component: {fileID: 2094812099441805835}
-  - component: {fileID: 5610083513242372613}
   m_Layer: 7
   m_Name: 8 Trunk Bottom
   m_TagString: Untagged
@@ -92,41 +90,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &2094812099441805835
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328274117600831185}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2cb9dbb48e1a4114b8abb4a61305e5cf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5610083513242372613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328274117600831185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ded19abc286c4546a9b7812f93198bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Resource
-  berryAnimator: {fileID: 2094812099441805835}
 --- !u!1 &2344567054758781240
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 2988079083528959109}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -23.90615}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.2, y: 4.2, z: 4.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -298,7 +261,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.5
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -367,7 +330,6 @@ MonoBehaviour:
   - {fileID: 4218435403904400054}
   - {fileID: 8532547157748665182}
   - {fileID: 6702959242277595843}
-  - {fileID: 328274117600831185}
   presentResourcesList: []
   consumedResourcesList: []
 --- !u!1 &3199896264515060023

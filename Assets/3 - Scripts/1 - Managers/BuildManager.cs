@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,7 @@ public class BuildManager : MonoBehaviour
     public Material Ghost;
     public Material WrongGhost;
 
+    private FactionManager.Factions playerFaction;
     private GameObject FollowObject;
     private Camera cam;
     private Dictionary<KeyCode, int> buildingKeys = new Dictionary<KeyCode, int>
@@ -49,11 +51,19 @@ public class BuildManager : MonoBehaviour
         {
             factionBuildingsList.Add(faction, new List<GameObject>());
         }
+
+        Building[] initialBuildings = FindObjectsByType<Building>();
+
+        foreach (Building building in initialBuildings)
+        {
+            building.Initialize();
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerFaction = FactionManager.Instance.PlayerFaction;
         cam = Camera.main;
         isPlacing = false;
         FollowObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -103,6 +113,7 @@ public class BuildManager : MonoBehaviour
                     GameObject placedBuilding = Instantiate(PrefabObject,
                                                             FollowObject.transform.position,
                                                             FollowObject.transform.rotation);
+                    placedBuilding.GetComponentInParent<Building>().Initialize(playerFaction);
                     NavMeshObstacle obstacle =
                         placedBuilding.transform
                         .Find("Mesh")
@@ -148,7 +159,7 @@ public class BuildManager : MonoBehaviour
         Debug.Log("[Build Manager] No faction building list to add to");
     }
 
-    public void RemoveBuildingToList(FactionManager.Factions faction, GameObject building)
+    public void RemoveBuildingFromList(FactionManager.Factions faction, GameObject building)
     {
         List<GameObject> buildingList = GetFactionBuildingList(faction);
         if (buildingList != null)
