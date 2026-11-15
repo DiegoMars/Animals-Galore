@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,31 +7,22 @@ public class BuildManager : MonoBehaviour
 {
     [Header("General")]
     public static BuildManager Instance {get; set;}
-    public GameObject PrefabObject;
     public bool isPlacing;
     private LayerMask Ground;
     private LayerMask Clickable;
     [SerializeField] private Dictionary<FactionManager.Factions, List<GameObject>> factionBuildingsList
         = new Dictionary<FactionManager.Factions, List<GameObject>>();
 
-    [Header("Prefabs")]
-    public GameObject FarmPrefab; // 0
-    public GameObject BarracksPrefab; // 1
-    public GameObject HousePrefab; //2
-
+    [Header("Buildings")]
+    public BuildingSO[] BuildingSOs;
     [Header("Materials")]
     public Material Ghost;
     public Material WrongGhost;
 
     private FactionManager.Factions playerFaction;
     private GameObject FollowObject;
+    private BuildingSO selectedBuildingSO;
     private Camera cam;
-    private Dictionary<KeyCode, int> buildingKeys = new Dictionary<KeyCode, int>
-    {
-        {KeyCode.Q, 0}, // Farm
-        {KeyCode.A, 1}, // Barracks
-        {KeyCode.W, 2}, // House
-    };
 
     private void Awake()
     {
@@ -78,17 +67,6 @@ public class BuildManager : MonoBehaviour
             FollowObject.SetActive(false);
             isPlacing = false;
         }
-        if (Input.anyKeyDown) 
-        {
-            foreach (KeyCode key in buildingKeys.Keys)
-            {
-                if (Input.GetKeyDown(key))
-                {
-                    OnBuildingSelection(buildingKeys[key]);
-                    break; 
-                }
-            }
-        }
         if (isPlacing)
         {
             RaycastHit hitInfo = new RaycastHit();
@@ -110,27 +88,7 @@ public class BuildManager : MonoBehaviour
 
                 if (canPlace && Input.GetMouseButtonDown(0))
                 {
-                    GameObject placedBuilding = Instantiate(PrefabObject,
-                                                            FollowObject.transform.position,
-                                                            FollowObject.transform.rotation);
-                    placedBuilding.GetComponentInParent<Building>().Initialize(playerFaction);
-                    NavMeshObstacle obstacle =
-                        placedBuilding.transform
-                        .Find("Mesh")
-                        ?.GetComponent<NavMeshObstacle>();
-
-                    if (obstacle != null)
-                    {
-                        obstacle.enabled = true;
-                    }
-                    else
-                    {
-                        Debug.LogWarning(
-                            $"No NavMeshObstacle found on the Mesh child of {placedBuilding.name}"
-                        );
-                    }
-                    FollowObject.SetActive(false);
-                    isPlacing = false;
+                    PlaceBuilding();
                 }
             }
             else
@@ -170,31 +128,16 @@ public class BuildManager : MonoBehaviour
         Debug.Log("[Build Manager] No faction building list to remove from");
     }
 
-    public void OnBuildingSelection(int index)
+    public void selectBuildingPrefab(BuildingSO building)
     {
-        switch (index)
+        if (ResourceManager.Instance.ResourceQuantity(FactionManager.Instance.PlayerFaction,
+            building.CostType) < building.Cost)
         {
-            case 0: 
-                Debug.Log($"[Build Manager] You selected {index}, the Farm");
-                selectBuildingPrefab(FarmPrefab);
-                break;
-            case 1: 
-                Debug.Log($"[Build Manager] You selected {index}, the Barracks");
-                selectBuildingPrefab(BarracksPrefab);
-                break;
-            case 2: 
-                Debug.Log($"[Build Manager] You selected {index}, the House");
-                selectBuildingPrefab(HousePrefab);
-                break;
-            default: 
-                Debug.Log($"[Build Manager] Error with building selection");
-                break;
+            Debug.Log($"[Build Manager] Can't afford {building.BuildingName}");
+            return;
         }
-    }
-
-    private void selectBuildingPrefab(GameObject buildingPrefab)
-    {
-        PrefabObject = buildingPrefab;
+        
+        selectedBuildingSO = building;
 
         // Remove the previous preview
         if (FollowObject != null)
@@ -203,8 +146,8 @@ public class BuildManager : MonoBehaviour
         }
 
         // Create a preview instance
-        FollowObject = Instantiate(PrefabObject);
-        FollowObject.name = PrefabObject.name + "_Preview";
+        FollowObject = Instantiate(building.Prefab);
+        FollowObject.name = building.Prefab.name + "_Preview";
 
         // Apply the ghost material to the root and all children
         Renderer[] renderers =
@@ -227,6 +170,35 @@ public class BuildManager : MonoBehaviour
         FollowObject.tag = "Untagged";
 
         isPlacing = true;
+    }
+
+    private void PlaceBuilding()
+    {
+        ResourceManager.Instance.SubtractResource(FactionManager.Instance.PlayerFaction,
+                                                  selectedBuildingSO.CostType,
+                                                  selectedBuildingSO.Cost);
+        Building placedBuilding = Instantiate(selectedBuildingSO.Prefab,
+                                              FollowObject.transform.position,
+                                              FollowObject.transform.rotation)
+                                              .GetComponentInParent<Building>();
+        placedBuilding.Initialize(playerFaction);
+        NavMeshObstacle obstacle =
+            placedBuilding.transform
+            .Find("Mesh")
+            ?.GetComponent<NavMeshObstacle>();
+
+        if (obstacle != null)
+        {
+            obstacle.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning(
+                $"No NavMeshObstacle found on the Mesh child of {placedBuilding.name}"
+            );
+        }
+        FollowObject.SetActive(false);
+        isPlacing = false;
     }
 
     // Will enventually be expanded to find only a specific type of building

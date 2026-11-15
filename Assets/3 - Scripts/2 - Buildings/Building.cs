@@ -42,7 +42,7 @@ public class Building : MonoBehaviour
             Debug.Log("[Building] Empty UnitOSList");
             return;
         }
-        ButtonManager.Instance.SetUi(this);
+        ButtonManager.Instance.SetUnitButtonsUi(this);
         Debug.Log("[Building] Setting UI");
     }
 

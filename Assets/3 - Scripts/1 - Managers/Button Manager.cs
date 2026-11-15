@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
@@ -11,21 +11,29 @@ public class ButtonManager : MonoBehaviour
     public static ButtonManager Instance {get; set;}
     public GameObject UnitSelectionMenu;
     public GameObject UnitSelectionButtonPrefab;
+    public GameObject BuildingSelectionMenu;
+    public GameObject BuildingSelectionButtonPrefab;
     public Color32 ColorActive;
     public Color32 ColorInactive;
-    private List<ButtonStruct> activeButtons = new();
 
-    private struct ButtonStruct
+    private List<UnitButtonStruct> ActiveUnitButtons = new();
+    private bool BuildingButtonsAreSet = false;
+    private List<BuildingButtonStruct> ActiveBuildingButtons = new();
+    [SerializeField] private List<KeyCode> KeysToUse = new() {KeyCode.Q, KeyCode.W, KeyCode.A, KeyCode.S};
+    private int KeyToUseNext = 0;
+    private Dictionary<KeyCode, BuildingSO> buildingKeys = new Dictionary<KeyCode, BuildingSO>();
+
+    private struct UnitButtonStruct
     {
         UnitSO unitSOb;
         private GameObject UnitButton;
         private Button ActualButton;
         public Color32 ColorActive;
         public Color32 ColorInactive;
-        public ButtonStruct(UnitSO unitOS, GameObject UnitButtonPrefab, Transform Menu,
+        public UnitButtonStruct(UnitSO unitSO, GameObject UnitButtonPrefab, Transform Menu,
                             Color32 colorActive, Color32 colorInactive, UnityAction onClick)
         {
-            unitSOb = unitOS;
+            unitSOb = unitSO;
             UnitButton = Instantiate(UnitButtonPrefab, Menu);
             ActualButton = UnitButton.GetComponentInChildren<Button>();
             ColorActive = colorActive;
@@ -70,6 +78,62 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
+    private struct BuildingButtonStruct
+    {
+        BuildingSO buildingSOb;
+        private GameObject BuildingButton;
+        private Button ActualButton;
+        public Color32 ColorActive;
+        public Color32 ColorInactive;
+        public BuildingButtonStruct(BuildingSO buildingSO, GameObject BuildingButtonPrefab, Transform Menu,
+                            Color32 colorActive, Color32 colorInactive, UnityAction onClick, KeyCode key)
+        {
+            buildingSOb = buildingSO;
+            BuildingButton = Instantiate(BuildingButtonPrefab, Menu);
+            ActualButton = BuildingButton.GetComponentInChildren<Button>();
+            ColorActive = colorActive;
+            ColorInactive = colorInactive;
+            
+            ActualButton.onClick.AddListener(onClick);
+            
+            bool nameFlag = true;
+            bool costFlag = true;
+            bool keyFlag = true;
+            foreach (TextMeshProUGUI textObject in
+                     BuildingButton.GetComponentsInChildren<TextMeshProUGUI>())
+            {
+                if (textObject.gameObject.name == "BuildingName")
+                {
+                    textObject.text = buildingSOb.BuildingName;
+                    nameFlag = false;
+                }
+                if (textObject.gameObject.name == "BuildingCost")
+                {
+                    textObject.text = $"{buildingSOb.Cost.ToString()} {buildingSOb.CostType.ToString()}";
+                    costFlag = false;
+                }
+                if (textObject.gameObject.name == "BuildingKey")
+                {
+                    textObject.text = $"{key}";
+                    keyFlag = false;
+                }
+            }
+            if (nameFlag || costFlag || keyFlag)
+            {
+                Debug.Log("[Button Manager : Button Struct] 1 or more meshes not found");
+            }
+            Debug.Log($"[Button Manager : Button Struct] End {buildingSOb.name} button initialization");
+        }
+        
+        public void CheckButton()
+        {
+            bool canAfford = ResourceManager.Instance.ResourceQuantity(FactionManager.Instance.PlayerFaction,
+                                                                       buildingSOb.CostType) >= buildingSOb.Cost;
+            ActualButton.enabled = canAfford; 
+            ActualButton.image.color = canAfford ? ColorActive : ColorInactive;
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -84,19 +148,51 @@ public class ButtonManager : MonoBehaviour
 
     public void Update()
     {
-        if (activeButtons.Count > 0)
+        // This is such a janky fix LMAOOO. But if it works it works
+        if (!BuildingButtonsAreSet)
         {
-            foreach (ButtonStruct buttonStruct in activeButtons)
+            SetBuildingButtonsUi(BuildManager.Instance.BuildingSOs);
+            BuildingButtonsAreSet = true;
+        }
+        if (Input.anyKeyDown) 
+        {
+            foreach (KeyCode key in buildingKeys.Keys)
+            {
+                if (Input.GetKeyDown(key))
+                {
+                    BuildManager.Instance.selectBuildingPrefab(buildingKeys[key]);
+                    break; 
+                }
+            }
+        }
+        if (ActiveUnitButtons.Count > 0)
+        {
+            foreach (UnitButtonStruct buttonStruct in ActiveUnitButtons)
+            {
+                buttonStruct.CheckButton();
+            }
+        }
+        if (ActiveBuildingButtons.Count > 0)
+        {
+            foreach (BuildingButtonStruct buttonStruct in ActiveBuildingButtons)
             {
                 buttonStruct.CheckButton();
             }
         }
     }
 
-    internal void SetUi(Building building)
+    internal void SetBuildingButtonsUi(BuildingSO[] buildings)
     {
-        Debug.Log("[Button Manager] Setting UI");
-        ClearButtons();
+        Debug.Log("[Button Manager] Setting Buildings UI");
+        foreach (BuildingSO building in buildings)
+        {
+            AddButton(building, () => BuildManager.Instance.selectBuildingPrefab(building));
+        }
+    }
+    internal void SetUnitButtonsUi(Building building)
+    {
+        Debug.Log("[Button Manager] Setting Unit Buttons UI");
+        ClearUnitButtons();
         foreach (UnitSO unit in building.UnitOSList)
         {
             AddButton(unit, () => building.StartUnitProduction(unit));
@@ -104,24 +200,34 @@ public class ButtonManager : MonoBehaviour
         UnitSelectionMenu.SetActive(true);
     }
 
-    private void ClearButtons()
+    private void ClearUnitButtons()
     {
         Debug.Log("[Button Manager] Clear Buttons");
-        if (activeButtons.Count > 0)
+        if (ActiveUnitButtons.Count > 0)
         {
-            foreach (ButtonStruct buttonStruct in activeButtons)
+            foreach (UnitButtonStruct buttonStruct in ActiveUnitButtons)
             {
                 buttonStruct.DestroyButton();
             }
-            activeButtons.Clear();
+            ActiveUnitButtons.Clear();
         }
     }
 
     private void AddButton(UnitSO unit, UnityAction onClick)
     {
         Debug.Log($"[Button Manager] Adding {unit.UnitName} button");
-        ButtonStruct thing = new ButtonStruct(unit, UnitSelectionButtonPrefab, UnitSelectionMenu.transform,
+        UnitButtonStruct thing = new UnitButtonStruct(unit, UnitSelectionButtonPrefab, UnitSelectionMenu.transform,
                                               ColorActive, ColorInactive, onClick);
-        activeButtons.Add(thing);
+        ActiveUnitButtons.Add(thing);
+    }
+    private void AddButton(BuildingSO building, UnityAction onClick)
+    {
+        Debug.Log($"[Button Manager] Adding {building.BuildingName} button");
+        KeyCode key = KeysToUse[KeyToUseNext];
+        KeyToUseNext += 1;
+        buildingKeys.Add(key, building);
+        BuildingButtonStruct thing = new BuildingButtonStruct(building, BuildingSelectionButtonPrefab, BuildingSelectionMenu.transform,
+                                              ColorActive, ColorInactive, onClick, key);
+        ActiveBuildingButtons.Add(thing);
     }
 }
