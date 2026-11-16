@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d8a8a2ce91c7f64695bc3c283e3ab19, type: 3}
+  m_Name: MotherIncubatorSO
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingSO
+  BuildingName: Mother Incubator
+  Prefab: {fileID: 7376911074110531025, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
+  UnitSOList: []
+  MaxHealth: 100
+  Cost: 10000000
+  CostType: 5

@@ -16,12 +16,11 @@ public class Unit : MonoBehaviour
     public ResourceProducer ResourceTarget;
     public Building Collector;
 
-    // [Header("Troop")]
-
     private bool PlayerControlled;
     private UnitMovement UnitMover;
     private NavMeshAgent UnitAgent;
     [SerializeField] private Animator attackAnimator;
+    private HealthBar healthBar;
 
     void Start()
     {
@@ -31,6 +30,7 @@ public class Unit : MonoBehaviour
             SelectionManager.Instance.allUnitsList.Add(gameObject);
             TopBarManager.Instance.UpdatePopulation();
         }
+        healthBar.Initialize(CurrentHealth, unitInfo.MaxHealth);
     }
 
     void Awake()
@@ -38,6 +38,7 @@ public class Unit : MonoBehaviour
         UnitMover = this.GetComponentInParent<UnitMovement>();
         UnitAgent = this.GetComponentInParent<NavMeshAgent>();
         attackAnimator = this.GetComponentInChildren<Animator>();
+        healthBar = this.GetComponentInChildren<HealthBar>();
 
         Faction = unitInfo.Faction;
         Harvestor = unitInfo.Harvestor;
@@ -98,6 +99,10 @@ public class Unit : MonoBehaviour
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealth(CurrentHealth, unitInfo.MaxHealth);
+        }
         if (CurrentHealth <= 0)
         {
             Destroy(gameObject);

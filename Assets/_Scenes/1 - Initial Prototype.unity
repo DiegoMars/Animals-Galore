@@ -221,6 +221,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4976793413371539088, guid: a7e9144d6afef9d4dbf6bf84e3b34591, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976793413371539088, guid: a7e9144d6afef9d4dbf6bf84e3b34591, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -552,6 +560,26 @@ PrefabInstance:
     - target: {fileID: 4396551222616120660, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
       propertyPath: PlayerControlled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468415572223899137, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468415572223899137, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468415572223899137, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486897408700839528, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486897408700839528, guid: 78e34425e86af014ab1f980edc0f5273, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1961,6 +1989,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 20dbc77e7e0caa345bbd5a25cd4a79d9, type: 2}
+    - target: {fileID: 8030748359199712873, guid: 670342ee3cf624741b11c6ee5e30f932, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030748359199712873, guid: 670342ee3cf624741b11c6ee5e30f932, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1986,6 +2022,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 20dbc77e7e0caa345bbd5a25cd4a79d9, type: 2}
+    - target: {fileID: 762562566973682401, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 762562566973682401, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4362061138381792363, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
       propertyPath: m_LocalPosition.x
       value: -37.111584
@@ -2268,6 +2312,14 @@ PrefabInstance:
     - target: {fileID: 309374741323540260, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
       propertyPath: m_Name
       value: Grasshopperv2
+      objectReference: {fileID: 0}
+    - target: {fileID: 837055798738330644, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 837055798738330644, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2786708654607541609, guid: 424ada9a60b565645ad43d234dc2931e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3303,6 +3355,14 @@ PrefabInstance:
       propertyPath: 'patrolPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1162899233}
+    - target: {fileID: 1700471589365544812, guid: de540ff3d27da2d48ad1149222840622, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1700471589365544812, guid: de540ff3d27da2d48ad1149222840622, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2786708654607541609, guid: de540ff3d27da2d48ad1149222840622, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.60967
@@ -3607,6 +3667,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786708654607541609, guid: a7e9144d6afef9d4dbf6bf84e3b34591, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976793413371539088, guid: a7e9144d6afef9d4dbf6bf84e3b34591, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976793413371539088, guid: a7e9144d6afef9d4dbf6bf84e3b34591, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4818,6 +4886,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MoveMarker
       objectReference: {fileID: 0}
+    - target: {fileID: 6138533281483350472, guid: c34f58ce82553a44280c6b569172ac18, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4988,6 +5060,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 762562566973682401, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 762562566973682401, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4362061138381792363, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.09054

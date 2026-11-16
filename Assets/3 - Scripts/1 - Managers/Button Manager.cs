@@ -61,7 +61,6 @@ public class ButtonManager : MonoBehaviour
             {
                 Debug.Log("[Button Manager : Button Struct] 1 or more meshes not found");
             }
-            Debug.Log($"[Button Manager : Button Struct] End {unitSOb.name} button initialization");
         }
         
         public void CheckButton()
@@ -122,7 +121,6 @@ public class ButtonManager : MonoBehaviour
             {
                 Debug.Log("[Button Manager : Button Struct] 1 or more meshes not found");
             }
-            Debug.Log($"[Button Manager : Button Struct] End {buildingSOb.name} button initialization");
         }
         
         public void CheckButton()
@@ -193,7 +191,7 @@ public class ButtonManager : MonoBehaviour
     {
         Debug.Log("[Button Manager] Setting Unit Buttons UI");
         ClearUnitButtons();
-        foreach (UnitSO unit in building.UnitOSList)
+        foreach (UnitSO unit in building.buidlingSO.UnitSOList)
         {
             AddButton(unit, () => building.StartUnitProduction(unit));
         }

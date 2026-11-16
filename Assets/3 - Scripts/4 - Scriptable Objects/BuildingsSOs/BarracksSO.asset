@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildingSO
   BuildingName: Barracks
   Prefab: {fileID: 4799181119091818017, guid: 9edf5dd54e08a0c4c9acb157cc735c10, type: 3}
+  UnitSOList:
+  - {fileID: 11400000, guid: aa3b1c3ae10b837418e6b335c9d92edf, type: 2}
+  MaxHealth: 50
   Cost: 10
   CostType: 2

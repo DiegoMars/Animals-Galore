@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildingSO
   BuildingName: Farm
   Prefab: {fileID: 4799181119091818017, guid: 670342ee3cf624741b11c6ee5e30f932, type: 3}
+  UnitSOList:
+  - {fileID: 11400000, guid: 939094582cc65bc45a69f9b318e9ac38, type: 2}
+  MaxHealth: 50
   Cost: 10
   CostType: 2

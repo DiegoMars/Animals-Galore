@@ -3,16 +3,22 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    [SerializeField] public UnitSO[] UnitOSList;
-    [SerializeField] public FactionManager.Factions faction;
+    
+    [Header("General")]
+    [SerializeField] public BuildingSO buidlingSO;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform destinationPoint;
-    [SerializeField] internal ResourceManager.ResourceTypes CollectionType;
     [SerializeField] public Animator collectionAnimator;
+    [Header("BuildingStats")]
+    public int health;
+    public FactionManager.Factions faction;
+    public ResourceManager.ResourceTypes CollectionType;
+    private UnitSO[] UnitOSList;
 
     public bool showMenu;
     public Transform SpawnPoint => spawnPoint;
     public Transform DestinationPoint => destinationPoint;
+    private HealthBar healthBar;
 
     public void OnDestroy()
     {
@@ -23,13 +29,27 @@ public class Building : MonoBehaviour
     public void Initialize()
     {
         BuildManager.Instance.AddBuildingToList(faction, gameObject);
+        SetStats();
     }
     // For all buildings after the start of the game
     public void Initialize(FactionManager.Factions faction)
     {
         this.faction = faction;
         BuildManager.Instance.AddBuildingToList(faction, gameObject);
+        SetStats();
     }
+
+    private void SetStats()
+    {
+        UnitOSList = buidlingSO.UnitSOList;
+        health = buidlingSO.MaxHealth;
+
+        healthBar = this.GetComponentInChildren<HealthBar>();
+        if (healthBar != null)
+        {
+            healthBar.Initialize(health, buidlingSO.MaxHealth);
+        }
+    }    
 
     public void SetBuildingUI() {
         if (!showMenu)
@@ -85,5 +105,18 @@ public class Building : MonoBehaviour
     internal void TriggerCollection()
     {
         collectionAnimator.SetTrigger("Collecting");
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealth(health, buidlingSO.MaxHealth);
+        }
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

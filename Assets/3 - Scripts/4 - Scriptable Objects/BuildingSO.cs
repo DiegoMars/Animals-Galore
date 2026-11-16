@@ -6,6 +6,8 @@ public class BuildingSO : ScriptableObject
 {
     public string BuildingName;
     public GameObject Prefab;
+    public UnitSO[] UnitSOList;
+    public int MaxHealth;
     public int Cost;
     public ResourceManager.ResourceTypes CostType;
 }

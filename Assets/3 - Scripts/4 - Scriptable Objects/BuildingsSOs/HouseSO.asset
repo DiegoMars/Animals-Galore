@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildingSO
   BuildingName: House
   Prefab: {fileID: 3523307811536940104, guid: 9b57900ce35724945a666e790632d216, type: 3}
+  UnitSOList: []
+  MaxHealth: 50
   Cost: 20
   CostType: 2
