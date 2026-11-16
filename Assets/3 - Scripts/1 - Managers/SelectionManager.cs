@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
 using UnityEngine;
-using System;
-using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -184,7 +182,9 @@ public class SelectionManager : MonoBehaviour
 
     private void EnableMovement(GameObject unit, bool shouldMove)
     {
-        unit.GetComponent<UnitMovement>().enabled = shouldMove;
+        UnitMovement thing = unit.GetComponent<UnitMovement>();
+        thing.Selected = shouldMove;
+        thing.UpdateAttackIndicator();
     }
 
     private void MoveBuildingMarker(Vector3 pos)
@@ -196,7 +196,7 @@ public class SelectionManager : MonoBehaviour
 
     private void SelectBuilding(Building building, bool value)
     {
-        if (!FactionManager.Instance.IsPlayer(building.faction))
+        if (!FactionManager.Instance.IsPlayer(building.Faction))
             return;
         if (value)
         {

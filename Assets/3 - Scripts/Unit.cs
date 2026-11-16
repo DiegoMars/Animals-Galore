@@ -96,6 +96,14 @@ public class Unit : MonoBehaviour
         Target.TakeDamage(unitInfo.Damage);
     }
 
+    public void Attack(Building Target)
+    {
+        if (Target == null)
+            return;
+        attackAnimator.SetTrigger("Attacking");
+        Target.TakeDamage(unitInfo.Damage);
+    }
+
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;

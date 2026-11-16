@@ -1930,6 +1930,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6666657073411454501, guid: 670342ee3cf624741b11c6ee5e30f932, type: 3}
+      propertyPath: Faction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6666657073411454501, guid: 670342ee3cf624741b11c6ee5e30f932, type: 3}
       propertyPath: faction
       value: 2
       objectReference: {fileID: 0}
@@ -2010,6 +2014,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7814739261365545943, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
+      propertyPath: Faction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -7814739261365545943, guid: 1aca0179fbcd610468303f20d3e9be03, type: 3}
       propertyPath: faction
       value: 2

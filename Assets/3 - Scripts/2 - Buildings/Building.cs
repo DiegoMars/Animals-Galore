@@ -11,7 +11,7 @@ public class Building : MonoBehaviour
     [SerializeField] public Animator collectionAnimator;
     [Header("BuildingStats")]
     public int health;
-    public FactionManager.Factions faction;
+    public FactionManager.Factions Faction;
     public ResourceManager.ResourceTypes CollectionType;
     private UnitSO[] UnitOSList;
 
@@ -22,19 +22,19 @@ public class Building : MonoBehaviour
 
     public void OnDestroy()
     {
-        BuildManager.Instance.RemoveBuildingFromList(faction, gameObject);
+        BuildManager.Instance.RemoveBuildingFromList(Faction, gameObject);
     }
 
     // For initial buildings to be added
     public void Initialize()
     {
-        BuildManager.Instance.AddBuildingToList(faction, gameObject);
+        BuildManager.Instance.AddBuildingToList(Faction, gameObject);
         SetStats();
     }
     // For all buildings after the start of the game
     public void Initialize(FactionManager.Factions faction)
     {
-        this.faction = faction;
+        this.Faction = faction;
         BuildManager.Instance.AddBuildingToList(faction, gameObject);
         SetStats();
     }
@@ -80,7 +80,7 @@ public class Building : MonoBehaviour
             return;
         }
 
-        ResourceManager.Instance.SubtractResource(faction, unit.costType, unit.cost);
+        ResourceManager.Instance.SubtractResource(Faction, unit.costType, unit.cost);
         GameObject newUnit = Instantiate(
             unit.prefab,
             spawnPoint.position,
@@ -98,7 +98,7 @@ public class Building : MonoBehaviour
     internal void CollectResource(ResourceManager.ResourceTypes resource)
     {
         Debug.Log($"[Building] Collected {resource}");
-        ResourceManager.Instance.AddResource(faction, resource, 10);
+        ResourceManager.Instance.AddResource(Faction, resource, 10);
         TriggerCollection();
     }
 

@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BuildingSO", menuName = "Scriptable Objects/Building")]
